@@ -15,4 +15,5 @@ RUN     yum install -y ansible && \
 RUN     curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/scaleft.repo && \
         yes | rpm --import https://dist.scaleft.com/pki/scaleft_rpm_key.asc && \
         yum install -y scaleft-client-tools && \
+        yum install -y openssh-clients && \
         yum clean all
