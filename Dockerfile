@@ -12,6 +12,10 @@ RUN     yum install -y ansible && \
         pip --no-cache-dir install 'pywinrm>=0.3.0' 'requests-ntlm' && \
         yum clean all
         
+RUN     yum install -y python36 && \
+        curl https://bootstrap.pypa.io/get-pip.py | python36 && \
+        yum clean all
+        
 RUN     curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/scaleft.repo && \
         yes | rpm --import https://dist.scaleft.com/pki/scaleft_rpm_key.asc && \
         yum install -y scaleft-client-tools && \
