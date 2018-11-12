@@ -12,7 +12,8 @@ RUN     yum install -y ansible && \
         pip --no-cache-dir install 'pywinrm>=0.3.0' 'requests-ntlm' && \
         yum clean all
         
-RUN     yum install -y epel-release python36 && \
+RUN     yum install -y epel-release && \
+        yum install -y python36 && \
         curl https://bootstrap.pypa.io/get-pip.py | python36 && \
         yum clean all
         
