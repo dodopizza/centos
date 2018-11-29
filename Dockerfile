@@ -21,4 +21,5 @@ RUN     curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.
         yes | rpm --import https://dist.scaleft.com/pki/scaleft_rpm_key.asc && \
         yum install -y scaleft-client-tools && \
         yum install -y openssh-clients && \
+        mkdir /root/.ssh && sft ssh-config > .ssh/config && \
         yum clean all
