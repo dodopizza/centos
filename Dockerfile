@@ -9,8 +9,8 @@ RUN        yum install -y epel-release \
         && ln -fs /usr/bin/python36 /usr/bin/python
 
            # Getting available versions of packages for debug
-RUN        ( pip3 --no-deps 'ansible==' || true ) \ 
-        && ( pip3 --no-deps 'azure-cli' || true ) 
+RUN        ( pip3 --no-deps 'ansible=='   || true ) \ 
+        && ( pip3 --no-deps 'azure-cli==' || true ) 
 
 RUN        pip3 --no-cache-dir install \
                 'ansible==2.7.4' \
