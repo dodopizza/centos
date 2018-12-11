@@ -25,10 +25,5 @@ RUN        curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.rep
         && yes | rpm --import https://dist.scaleft.com/pki/scaleft_rpm_key.asc \
         && yum install -y scaleft-client-tools \
         && yum install -y openssh-clients \
-        && yum clean all
-
-COPY    docker-entrypoint.sh /
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
-
-CMD ["/bin/bash"]
+        && yum clean all \
+        && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config

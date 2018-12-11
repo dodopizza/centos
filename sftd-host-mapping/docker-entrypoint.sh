@@ -28,9 +28,5 @@ if [ ! -z ${SFT_USER_ID:-''} ] && [ ! -z ${SFT_USER_NAME:-''} ]; then
 fi
 
 ## When logged from root user (default point)
-
-mkdir /root/.ssh
-sft ssh-config > /root/.ssh/config
 echo "Logged from $(whoami)"
-
 exec "$@"
