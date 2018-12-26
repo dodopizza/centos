@@ -19,7 +19,8 @@ RUN     rpm --import https://packages.microsoft.com/keys/microsoft.asc && \
 RUN     pip3 --no-cache-dir install \
            'ansible==2.7.4' \
            'pywinrm>=0.3.0' \
-           'requests-ntlm'
+           'requests-ntlm' \
+           'ansible-lint'
 
 RUN        curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/scaleft.repo \
         && yes | rpm --import https://dist.scaleft.com/pki/scaleft_rpm_key.asc \
