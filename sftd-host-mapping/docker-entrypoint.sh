@@ -18,7 +18,7 @@ if [ ! -z ${SFT_USER_ID:-''} ] && [ ! -z ${SFT_USER_NAME:-''} ]; then
     echo 'Logged from $(whoami)'
   "
 
-  if [ $# -gt 1 ]; then
+  if [ $# -gt 0 ]; then
     su -l ${SFT_USER_NAME} -c "$@"
   else
     su -l ${SFT_USER_NAME}
