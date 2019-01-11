@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:centos7.4.1708
 LABEL maintainer="Vitaly Uvarov <vitalyu@gmail.com>"
 
 RUN        yum install -y epel-release \
@@ -24,7 +24,7 @@ RUN     pip3 --no-cache-dir install \
 
 RUN        curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/scaleft.repo \
         && yes | rpm --import https://dist.scaleft.com/pki/scaleft_rpm_key.asc \
-        && yum install -y scaleft-client-tools \
+        && yum install -y scaleft-client-tools-1.36.2-1.x86_64 \
         && yum install -y openssh-clients \
         && yum clean all \
         && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config

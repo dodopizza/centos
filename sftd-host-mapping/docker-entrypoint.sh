@@ -12,10 +12,10 @@ set -eu
 if [ ! -z ${SFT_USER_ID:-''} ] && [ ! -z ${SFT_USER_NAME:-''} ]; then
   useradd -u ${SFT_USER_ID} -g root ${SFT_USER_NAME}
   su -l ${SFT_USER_NAME} -c "
+    whoami
     install -d ~/.ssh/
     sft ssh-config > ~/.ssh/config
     sft config service_auth.enable true >/dev/null
-    echo 'Logged from $(whoami)'
   "
 
   if [ $# -gt 0 ]; then
