@@ -2,7 +2,7 @@ FROM centos:centos7.4.1708
 LABEL maintainer="Vitaly Uvarov <vitalyu@gmail.com>"
 
 RUN        yum install -y epel-release \
-        && yum install -y python36 \
+        && yum install -y python36 unzip \
         && yum clean all \
         && curl https://bootstrap.pypa.io/get-pip.py | python36 \
         && pip3 install --upgrade pip
@@ -21,6 +21,10 @@ RUN     pip3 --no-cache-dir install \
            'pywinrm>=0.3.0' \
            'requests-ntlm' \
            'ansible-lint'
+
+RUN        curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_linux_amd64.zip \
+        && unzip /tmp/terraform.zip -d /usr/bin/ \
+        && rm -f /tmp/terraform.zip
 
 RUN        curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/scaleft.repo \
         && yes | rpm --import https://dist.scaleft.com/pki/scaleft_rpm_key.asc \
