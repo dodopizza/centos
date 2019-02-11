@@ -10,7 +10,7 @@ set -eu
 #       ..
 #
 if [ ! -z ${SFT_USER_ID:-''} ] && [ ! -z ${SFT_USER_NAME:-''} ]; then
-  useradd -u ${SFT_USER_ID} -g root ${SFT_USER_NAME}
+  useradd -u ${SFT_USER_ID} -g root ${SFT_USER_NAME} || true
   su -l ${SFT_USER_NAME} -c "
     whoami
     install -d ~/.ssh/
