@@ -9,24 +9,30 @@ set -eu
 #       -v /var/run/sftd/management.sock:/var/run/sftd/management.sock
 #       ..
 #
-if [ ! -z ${SFT_USER_ID:-''} ] && [ ! -z ${SFT_USER_NAME:-''} ]; then
-  useradd -u ${SFT_USER_ID} -g root ${SFT_USER_NAME} || true
-  su -l ${SFT_USER_NAME} -c "
-    whoami
-    install -d ~/.ssh/
-    sft ssh-config > ~/.ssh/config
-    sft config service_auth.enable true >/dev/null
-  "
 
-  if [ $# -gt 0 ]; then
-    su -l ${SFT_USER_NAME} -c "$@"
-  else
-    su -l ${SFT_USER_NAME}
-  fi
-
+## When logged from root user (default point)
+if [ -z ${SFT_USER_NAME:-''} ]; then
+  echo "Logged from $(whoami)"
+  exec "$@"
   exit $?
 fi
 
-## When logged from root user (default point)
-echo "Logged from $(whoami)"
-exec "$@"
+## When logged from SFT_USER_NAME
+( 
+  useradd -u ${SFT_USER_ID} -g root ${SFT_USER_NAME}
+  echo "${SFT_USER_NAME}" | passwd --stdin ${SFT_USER_NAME}
+  echo "${SFT_USER_NAME} ALL=NOPASSWD:ALL" | EDITOR='tee -a' visudo
+) || true
+
+su -l ${SFT_USER_NAME} -c "
+  whoami
+  install -d ~/.ssh/
+  sft ssh-config > ~/.ssh/config
+  sft config service_auth.enable true >/dev/null
+"
+
+if [ $# -gt 0 ]; then
+  su -l ${SFT_USER_NAME} -c "$@"
+else
+  su -l ${SFT_USER_NAME}
+fi
