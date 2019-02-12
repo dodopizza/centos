@@ -18,11 +18,10 @@ if [ -z ${SFT_USER_NAME:-''} ]; then
 fi
 
 ## When logged from SFT_USER_NAME
-( 
-  useradd -u ${SFT_USER_ID} -g root ${SFT_USER_NAME}
-  echo "${SFT_USER_NAME}" | passwd --stdin ${SFT_USER_NAME}
-  echo "${SFT_USER_NAME} ALL=NOPASSWD:ALL" | EDITOR='tee -a' visudo
-) || true
+   useradd -u ${SFT_USER_ID} -g root ${SFT_USER_NAME} \
+&& echo "${SFT_USER_NAME}" | passwd --stdin ${SFT_USER_NAME} \
+&& echo "${SFT_USER_NAME} ALL=NOPASSWD:ALL" | EDITOR='tee -a' visudo \
+|| true
 
 su -l ${SFT_USER_NAME} -c "
   whoami
