@@ -1,3 +1,10 @@
+FROM gcc:6 AS jsonnet_builder
+WORKDIR    /workdir
+RUN        git clone https://github.com/google/jsonnet . \
+        && export LDFLAGS=-static \
+        && make
+
+
 FROM centos:centos7.4.1708
 LABEL maintainer="Vitaly Uvarov <vitalyu@gmail.com>"
 
@@ -35,3 +42,5 @@ RUN        curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.rep
         && yum install -y openssh-clients \
         && yum clean all \
         && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config
+
+COPY    --from=jsonnet_builder /workdir/jsonnet /usr/local/bin/
