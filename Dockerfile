@@ -29,6 +29,10 @@ RUN     pip3 --no-cache-dir install \
            'requests-ntlm' \
            'ansible-lint'
 
+RUN        yum install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm \
+        && yum list | grep percona \
+        && yum install -y Percona-Server-client-57 percona-xtrabackup percona-toolkit
+
 RUN        curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_linux_amd64.zip \
         && unzip /tmp/terraform.zip -d /usr/bin/ \
         && rm -f /tmp/terraform.zip
