@@ -1,5 +1,18 @@
 [![Docker Build](https://img.shields.io/docker/build/dodopizza/centos.svg?maxAge=604800)](https://hub.docker.com/r/dodopizza/centos)
 
+# Packages
+
+* scaleft
+* az
+* python36 / pip3
+* ansible 2.7.4 / ansible-lint / requests-ntlm / pywinrm
+* percona mysql client 5.7 / percona xtrabackup / percona toolkit
+* terraform
+* drone-cli
+* jsonnet
+
+
+
 
 # Usage
 
