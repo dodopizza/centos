@@ -1,4 +1,8 @@
-[![Docker Build](https://img.shields.io/docker/build/dodopizza/centos.svg?maxAge=604800)](https://hub.docker.com/r/dodopizza/centos)
+![](https://img.shields.io/docker/automated/dodopizza/centos.svg)
+![](https://img.shields.io/docker/build/dodopizza/centos.svg)
+
+[DockerHub](https://hub.docker.com/r/dodopizza/centos)
+
 
 # Packages
 
@@ -10,8 +14,6 @@
 * terraform
 * drone-cli
 * jsonnet
-
-
 
 
 # Usage
@@ -35,6 +37,7 @@ docker run -it --rm \
     -v /var/run/sftd/management.sock:/var/run/sftd/management.sock \
     dodopizza/centos:latest-sftd-host-mapping
 ```
+
 
 # Build and push to registry
 
