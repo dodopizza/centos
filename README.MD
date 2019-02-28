@@ -26,5 +26,5 @@ docker run -it --rm \
 # Build and push to registry
 
 ```
-./docker-build.sh <tag> [message]
+./docker.sh <build|push> <tag> [message]
 ```
