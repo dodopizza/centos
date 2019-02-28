@@ -18,20 +18,21 @@ RUN        yum install -y epel-release \
 RUN        ( pip3 --no-deps 'ansible=='   || true ) \ 
         && ( pip3 --no-deps 'azure-cli==' || true ) 
 
-RUN     rpm --import https://packages.microsoft.com/keys/microsoft.asc && \
-        sh -c 'echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.microsoft.com/yumrepos/azure-cli\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo' && \
-        yum install -y azure-cli && \
-        yum clean all
+RUN        rpm --import https://packages.microsoft.com/keys/microsoft.asc \
+        && sh -c 'echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.microsoft.com/yumrepos/azure-cli\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo' \
+        && yum install -y azure-cli \
+        && yum clean all
 
 RUN     pip3 --no-cache-dir install \
            'ansible==2.7.4' \
            'pywinrm>=0.3.0' \
-           'requests-ntlm' \
+           'requests-ntlm'  \
            'ansible-lint'
 
 RUN        yum install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm \
         && yum list | grep percona \
-        && yum install -y Percona-Server-client-57 percona-xtrabackup percona-toolkit
+        && yum install -y Percona-Server-client-57 percona-xtrabackup percona-toolkit \
+        && yum clean all
 
 RUN        curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_linux_amd64.zip \
         && unzip /tmp/terraform.zip -d /usr/bin/ \
