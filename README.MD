@@ -14,7 +14,7 @@
 * terraform
 * drone-cli
 * jsonnet
-
+* az-mysqlpump (mysqlpump 5.7.21 с отключенной проверкой версии MySQL - нужно для managed баз)
 
 # Usage
 

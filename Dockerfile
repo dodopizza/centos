@@ -49,3 +49,5 @@ RUN        curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.rep
         && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config
 
 COPY    --from=jsonnet_builder /workdir/jsonnet /usr/local/bin/
+
+COPY    bin/az-mysqlpump /usr/local/bin/
