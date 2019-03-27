@@ -43,7 +43,7 @@ RUN        curl -L https://github.com/drone/drone-cli/releases/download/v0.8.6/d
 
 RUN        curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/scaleft.repo \
         && yes | rpm --import https://dist.scaleft.com/pki/scaleft_rpm_key.asc \
-        && yum install -y scaleft-client-tools-1.36.2-1.x86_64 \
+        && yum install -y scaleft-client-tools-1.38.5-1.x86_64 \
         && yum install -y openssh-clients \
         && yum clean all \
         && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config
