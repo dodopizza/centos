@@ -8,10 +8,12 @@
 
 * scaleft
 * az
+* azcopy
 * python36 / pip3
 * ansible 2.7.4 / ansible-lint / requests-ntlm / pywinrm
 * percona mysql client 5.7 / percona xtrabackup / percona toolkit
-* terraform
+* terraform (0.11.13)
+* terraform12 (0.12.0-beta1)
 * drone-cli
 * jsonnet
 * az-mysqlpump (mysqlpump 5.7.21 с отключенной проверкой версии MySQL - нужно для managed баз)
