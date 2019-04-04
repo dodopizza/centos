@@ -9,7 +9,7 @@ FROM centos:centos7.4.1708
 LABEL maintainer="Vitaly Uvarov <v.uvarov@dodopizza.com>"
 
 RUN yum install -y epel-release \
-    && yum install -y python36 unzip \
+    && yum install -y python36 jq unzip \
     && yum clean all \
     && curl https://bootstrap.pypa.io/get-pip.py | python36 \
     && pip3 install --upgrade pip
