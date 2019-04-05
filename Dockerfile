@@ -14,12 +14,8 @@ RUN yum install -y epel-release \
     && curl https://bootstrap.pypa.io/get-pip.py | python36 \
     && pip3 install --upgrade pip
 
-COPY --from=jsonnet_builder /workdir/jsonnet /usr/local/bin/
-
-COPY bin/az-mysqlpump /usr/local/bin/
-
 ## Getting available versions of packages for debug
-RUN ( pip3 --no-deps 'ansible==' || true )
+# RUN ( pip3 install 'ansible==' || true )
 
 RUN pip3 --no-cache-dir install \
     'azure>=2.0.0' \
@@ -29,9 +25,6 @@ RUN pip3 --no-cache-dir install \
     'requests-ntlm'  \
     'ansible-lint'
 
-## Fucking az use 'python' bin in script
-RUN sed -i 's/python/python36/' /usr/local/bin/az
-
 ## azcopy: https://docs.microsoft.com/ru-ru/azure/storage/common/storage-use-azcopy-linux
 RUN yum install -y libunwind icu \
     && yum clean all \
@@ -39,7 +32,11 @@ RUN yum install -y libunwind icu \
     && curl -L https://aka.ms/downloadazcopylinux64 | tar -xz \
     && ./install.sh \
     && rm -f ./install.sh \
-    && ln -f -s /srv/azcopy/azcopy /bin/azcopy
+    && ln -f -s /srv/azcopy/azcopy /usr/bin/azcopy
+
+## Set python36 as python, but yum uses python2, so change the script
+RUN ln -f -s /usr/bin/python36 /usr/bin/python \
+    && sed -i 's/python$/python2/' {/usr/bin/yum,/usr/libexec/urlgrabber-ext-down}
 
 RUN yum install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm \
     && yum list | grep percona \
@@ -64,3 +61,7 @@ RUN curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/sc
     && yum install -y openssh-clients \
     && yum clean all \
     && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config
+
+COPY --from=jsonnet_builder /workdir/jsonnet /usr/local/bin/
+
+COPY bin/az-mysqlpump /usr/local/bin/
