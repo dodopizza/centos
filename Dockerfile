@@ -4,6 +4,12 @@ RUN git clone https://github.com/google/jsonnet . \
     && export LDFLAGS=-static \
     && make
 
+FROM centos:centos7.4.1708 AS redis_builder
+WORKDIR /workdir
+RUN yum install -y gcc make \
+    && curl -L http://download.redis.io/redis-stable.tar.gz | tar -xz \
+    && cd ./redis-stable \
+    && make
 
 FROM centos:centos7.4.1708
 LABEL maintainer="Vitaly Uvarov <v.uvarov@dodopizza.com>"
@@ -63,5 +69,7 @@ RUN curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/sc
     && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config
 
 COPY --from=jsonnet_builder /workdir/jsonnet /usr/local/bin/
+
+COPY --from=redis_builder /workdir/redis-stable/src/redis-cli /usr/local/bin/
 
 COPY bin/az-mysqlpump /usr/local/bin/

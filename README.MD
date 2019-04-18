@@ -15,6 +15,7 @@
 * terraform (0.11.13)
 * terraform12 (0.12.0-beta1)
 * drone-cli
+* redis-cli
 * jsonnet
 * az-mysqlpump (mysqlpump 5.7.21 с отключенной проверкой версии MySQL - нужно для managed баз)
 
