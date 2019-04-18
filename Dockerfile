@@ -23,10 +23,13 @@ RUN yum install -y epel-release \
 ## Getting available versions of packages for debug
 # RUN ( pip3 install 'ansible==' || true )
 
-RUN pip3 --no-cache-dir install \
-    'azure>=2.0.0' \
+RUN yum install -y gcc python36-devel \
+    && pip3 --no-cache-dir install \
+    'psutil' \
+    'cryptography<2.5' \
     'azure-cli>=2.0.0' \
-    'ansible==2.7.4' \
+    'azure' \
+    'ansible==2.7.10' \
     'pywinrm>=0.3.0' \
     'requests-ntlm'  \
     'ansible-lint'
@@ -40,9 +43,8 @@ RUN yum install -y libunwind icu \
     && rm -f ./install.sh \
     && ln -f -s /srv/azcopy/azcopy /usr/bin/azcopy
 
-## Set python36 as python, but yum uses python2, so change the script
-RUN ln -f -s /usr/bin/python36 /usr/bin/python \
-    && sed -i 's/python$/python2/' {/usr/bin/yum,/usr/libexec/urlgrabber-ext-down}
+## Fucking az use 'python' bin in script
+RUN sed -i 's/python/python36/' /usr/local/bin/az
 
 RUN yum install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm \
     && yum list | grep percona \
