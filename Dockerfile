@@ -34,14 +34,10 @@ RUN yum install -y gcc python36-devel \
     'requests-ntlm'  \
     'ansible-lint'
 
-## azcopy: https://docs.microsoft.com/ru-ru/azure/storage/common/storage-use-azcopy-linux
-RUN yum install -y libunwind icu \
-    && yum clean all \
-    && cd /srv/ \
-    && curl -L https://aka.ms/downloadazcopylinux64 | tar -xz \
-    && ./install.sh \
-    && rm -f ./install.sh \
-    && ln -f -s /srv/azcopy/azcopy /usr/bin/azcopy
+## azcopy10: https://docs.microsoft.com/ru-ru/azure/storage/common/storage-use-azcopy-v10#download-and-install-azcopy
+RUN cd /tmp/ \
+    && curl -L https://aka.ms/downloadazcopy-v10-linux | tar --strip-components 1 -xz \
+    && mv -f /tmp/azcopy /usr/bin/
 
 ## Fucking az use 'python' bin in script
 RUN sed -i 's/python/python36/' /usr/local/bin/az
