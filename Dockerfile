@@ -57,7 +57,7 @@ RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.13/
     && rm -f /tmp/terraform.zip
 
 RUN curl -L https://github.com/drone/drone-cli/releases/download/v0.8.6/drone_linux_amd64.tar.gz | tar zx \
-    && install -t /usr/local/bin drone
+    && mv drone /bin
 
 RUN curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/scaleft.repo \
     && yes | rpm --import https://dist.scaleft.com/pki/scaleft_rpm_key.asc \
