@@ -71,3 +71,5 @@ COPY --from=jsonnet_builder /workdir/jsonnet /usr/local/bin/
 COPY --from=redis_builder /workdir/redis-stable/src/redis-cli /usr/local/bin/
 
 COPY bin/az-mysqlpump /usr/local/bin/
+
+RUN az aks install-cli
