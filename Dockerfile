@@ -29,7 +29,7 @@ RUN yum install -y gcc python36-devel \
     'cryptography<2.5' \
     'azure-cli>=2.0.0' \
     'azure' \
-    'ansible==2.7.10' \
+    'ansible==2.8.0' \
     'pywinrm>=0.3.0' \
     'requests-ntlm'  \
     'ansible-lint'
