@@ -47,12 +47,7 @@ RUN yum install -y https://repo.percona.com/yum/percona-release-latest.noarch.rp
     && yum install -y Percona-Server-client-57 percona-xtrabackup percona-toolkit \
     && yum clean all
 
-RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.0-beta1/terraform_0.12.0-beta1_linux_amd64.zip \
-    && unzip /tmp/terraform.zip -d /usr/bin/ \
-    && mv /usr/bin/terraform{,12} \
-    && rm -f /tmp/terraform.zip
-
-RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.11.13/terraform_0.11.13_linux_amd64.zip \
+RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.0/terraform_0.12.0_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
 
