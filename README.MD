@@ -3,7 +3,11 @@
 [DockerHub](https://hub.docker.com/r/dodopizza/centos)
 
 # Update info
-## 2019-05-21
+
+## v1.14 2019-05-21
+drone client 1.1.1 (from 0.8.6)
+
+## v1.13 2019-05-21
 Ansible 2.8.0 (from 2.7.10)
 
 
@@ -15,8 +19,7 @@ Ansible 2.8.0 (from 2.7.10)
 * python36 / pip3
 * ansible 2.7.4 / ansible-lint / requests-ntlm / pywinrm
 * percona mysql client 5.7 / percona xtrabackup / percona toolkit
-* terraform (0.11.13)
-* terraform12 (0.12.0-beta1)
+* terraform (0.12)
 * drone-cli
 * redis-cli
 * jsonnet
