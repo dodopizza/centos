@@ -8,6 +8,9 @@
 drone client 1.1.1 (from 0.8.6)
 
 ## v1.13 (2019-05-21)
+Terraform 0.12 as default
+
+## v1.12 (2019-05-17)
 Ansible 2.8.0 (from 2.7.10)
 
 
