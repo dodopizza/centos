@@ -1,12 +1,13 @@
 ![](https://img.shields.io/docker/automated/dodopizza/centos.svg)
+[![Build Status](https://drone.dodois.ru/api/badges/dodopizza/docker-centos/status.svg)](https://drone.dodois.ru/dodopizza/docker-centos)
 
 [DockerHub](https://hub.docker.com/r/dodopizza/centos)
 
 # Update info
 
 ## v1.14 (2019-06-05)
-drone client 1.1.1 (from 0.8.6)
-add .drone.yml autobuild
+* drone client 1.1.1 (from 0.8.6)
+* add .drone.yml autobuild
 
 ## v1.13 (2019-05-21)
 Terraform 0.12 as default
