@@ -1,6 +1,7 @@
-FROM gcc:6 AS jsonnet_builder
+FROM alpine:latest AS jsonnet_builder
 WORKDIR /workdir
-RUN git clone https://github.com/google/jsonnet . \
+RUN apk -U add build-base git \
+    && git clone https://github.com/google/jsonnet . \
     && export LDFLAGS=-static \
     && make
 
@@ -62,6 +63,7 @@ RUN curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/sc
     && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config
 
 COPY --from=jsonnet_builder /workdir/jsonnet /usr/local/bin/
+COPY --from=jsonnet_builder /workdir/jsonnetfmt /usr/local/bin/
 
 COPY --from=redis_builder /workdir/redis-stable/src/redis-cli /usr/local/bin/
 
