@@ -7,6 +7,7 @@
 
 ## v1.14 (2019-06-05)
 * drone client 1.1.1 (from 0.8.6)
+* change jsonnet build image from gcc to alpine (like in jsonnet dockerfile repo)
 
 ## v1.13 (2019-05-21)
 Terraform 0.12 as default
