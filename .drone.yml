@@ -1,0 +1,39 @@
+---
+kind: pipeline
+name: default
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: build-container
+    pull: default
+    image: docker
+    commands:
+      - "/bin/sh ./docker.sh build ${DRONE_BRANCH}"
+    volumes:
+      - name: 2f7661722f72756e2f646f636b65722e736f631b
+        path: /var/run/docker.sock
+
+  - name: docker-push
+    pull: default
+    image: docker
+    commands:
+      - docker login $DOCKER_REGISTRY -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - "/bin/sh ./docker.sh push ${DRONE_BRANCH}"
+    environment:
+      DOCKER_REGISTRY:
+        from_secret: global_docker_registry
+      DOCKER_USERNAME:
+        from_secret: global_docker_registry_username
+      DOCKER_PASSWORD:
+        from_secret: global_docker_registry_password
+    volumes:
+      - name: 2f7661722f72756e2f646f636b65722e736f631b
+        path: /var/run/docker.sock
+
+volumes:
+  - name: 2f7661722f72756e2f646f636b65722e736f631b
+    host:
+      path: /var/run/docker.sock
