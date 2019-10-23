@@ -37,7 +37,7 @@ RUN yum install -y gcc python36-devel \
 
 ## azcopy10: https://docs.microsoft.com/ru-ru/azure/storage/common/storage-use-azcopy-v10#download-and-install-azcopy
 RUN cd /tmp/ \
-    && curl -L https://azcopyvnext.azureedge.net/release20190507/azcopy_linux_amd64_10.1.1.tar.gz | tar --strip-components 1 -xz \
+    && curl -L https://aka.ms/downloadazcopy-v10-linux | tar --strip-components 1 -xz \
     && mv -f /tmp/azcopy /usr/bin/
 
 ## Fucking az use 'python' bin in script
