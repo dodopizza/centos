@@ -1,3 +1,4 @@
+![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/dodopizza/centos)
 ![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/dodopizza/centos)
 
 [DockerHub](https://hub.docker.com/r/dodopizza/centos)
