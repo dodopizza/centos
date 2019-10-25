@@ -16,11 +16,13 @@
 * redis-cli 5.0.6
 * Python 2.7.5
 * Python 3.6.8
-* azure-cli 2.0.75
+* azure-cli                         2.0.75
 * ansible 2.8.6
 * ansible-lint 4.1.0
 * azcopy version 10.3.1
 * mysql  Ver 14.14 Distrib 5.7.27-30, for Linux (x86_64) using  6.2
+* mysqldump  Ver 10.13 Distrib 5.7.27-30, for Linux (x86_64)
+* mysqlpump  Ver 1.0.0 Distrib 5.7.27-30, for Linux (x86_64)
 * xtrabackup version 2.3.10 based on MySQL server 5.6.24 Linux (x86_64) (revision id: bd0d4403f36)
 * pt-online-schema-change 3.1.0
 * drone version 1.2.0
