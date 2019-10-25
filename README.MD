@@ -1,5 +1,4 @@
-![](https://img.shields.io/docker/automated/dodopizza/centos.svg)
-[![Build Status](https://drone.dodois.ru/api/badges/dodopizza/docker-centos/status.svg)](https://drone.dodois.ru/dodopizza/docker-centos)
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/dodopizza/centos)
 
 [DockerHub](https://hub.docker.com/r/dodopizza/centos)
 
