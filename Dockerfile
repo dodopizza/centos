@@ -111,5 +111,5 @@ RUN echo '------------------------------' \
 ## bash aliases
 RUN echo $' \n\
     alias k="kubectl" \n\
-    alias dodologin="az login && sft enroll && sft login)" \n\
+    alias dodologin="az login && sft enroll && sft login" \n\
     ' >> ~/.bashrc
