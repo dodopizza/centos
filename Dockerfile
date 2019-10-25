@@ -63,7 +63,7 @@ RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.12/
 
 ## drone ci
 RUN curl -L https://github.com/drone/drone-cli/releases/download/v1.2.0/drone_linux_arm64.tar.gz | tar zx \
-    && mv drone /bin
+    && mv drone /usr/bin/
 
 ## azure mysqlpump binary (5.6 issue)
 COPY bin/az-mysqlpump /usr/local/bin/
