@@ -16,7 +16,9 @@
 * redis-cli 5.0.6
 * Python 2.7.5
 * Python 3.6.8
-* azure-cli                         2.0.75
+* pip 19.3.1 from /usr/lib/python2.7/site-packages/pip (python 2.7)
+* pip 19.3.1 from /usr/local/lib/python3.6/site-packages/pip (python 3.6)
+* azure-cli 2.0.75
 * ansible 2.8.6
 * ansible-lint 4.1.0
 * azcopy version 10.3.1

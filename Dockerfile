@@ -25,6 +25,7 @@ RUN yum install -y epel-release \
     && alternatives --install /usr/bin/python python /usr/bin/python2.7 50 \
     && alternatives --install /usr/bin/python python /usr/bin/python3.6 60 \
     && alternatives --set python /usr/bin/python2.7 \
+    && curl https://bootstrap.pypa.io/get-pip.py | python2.7 \
     && curl https://bootstrap.pypa.io/get-pip.py | python3.6 \
     && pip install --upgrade pip
 
@@ -93,6 +94,8 @@ RUN echo '------------------------------' \
     && redis-cli --version \
     && python --version \
     && python3.6 --version \
+    && pip2 --version \
+    && pip3 --version \
     && az --version | head -n 1 \
     && ansible --version | head -n 1 \
     && ansible-lint --version \
