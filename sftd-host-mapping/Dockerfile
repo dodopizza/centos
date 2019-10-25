@@ -1,9 +1,0 @@
-FROM dodopizza/centos:1.14
-LABEL maintainer="Vitaly Uvarov <vitalyu@gmail.com>"
-
-RUN   yum install -y sudo && yum clean all
-COPY  docker-entrypoint.sh /
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
-
-CMD ["/bin/bash"]

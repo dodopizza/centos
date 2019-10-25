@@ -3,58 +3,50 @@
 
 [DockerHub](https://hub.docker.com/r/dodopizza/centos)
 
-# Update info
+# BUILD/PUSH/TEST IMAGE
 
-## v1.14 (2019-06-05)
-* drone client 1.1.1 (from 0.8.6)
-* change jsonnet build image from gcc to alpine (like in jsonnet dockerfile repo)
+```
+./docker.sh <build|push|test> <tag> [message]
+```
 
-## v1.13 (2019-05-21)
-Terraform 0.12 as default
+# CHANGELOG
 
-## v1.12 (2019-05-17)
-Ansible 2.8.0 (from 2.7.10)
+## v2.0 (2019-10-25) INITIAL
+* Jsonnet commandline interpreter v0.14.0
+* redis-cli 5.0.6
+* Python 2.7.5
+* Python 3.6.8
+* azure-cli 2.0.75
+* ansible 2.8.6
+* ansible-lint 4.1.0
+* azcopy version 10.3.1
+* mysql  Ver 14.14 Distrib 5.7.27-30, for Linux (x86_64) using  6.2
+* xtrabackup version 2.3.10 based on MySQL server 5.6.24 Linux (x86_64) (revision id: bd0d4403f36)
+* pt-online-schema-change 3.1.0
+* drone version 1.2.0
+* sft version 1.40.8
+* az-mysqlpump  Ver 1.0.0 Distrib 5.7.24, for Linux (x86_64)
+* kubectl: Client Version: v1.16.2
 
 
-# Packages
-
-* scaleft
-* az
-* azcopy
-* python36 / pip3
-* ansible 2.7.4 / ansible-lint / requests-ntlm / pywinrm
-* percona mysql client 5.7 / percona xtrabackup / percona toolkit
-* terraform (0.12)
-* drone-cli
-* redis-cli
-* jsonnet
-* az-mysqlpump (mysqlpump 5.7.21 с отключенной проверкой версии MySQL - нужно для managed баз)
-
-# Usage
+# USAGE
 
 Run default shell and mount current working directory:
 ```
-docker run -it --rm -w /workdir -v "$(PWD):/workdir" dodopizza/centos
+docker run -it --rm -w /workdir -v "$(PWD):/workdir" dodopizza/centos:TAG
 ```
 
-To access to dodo infrastructure:
+To login to dodo infrastructure just type:
 ```
-az login && sft enroll && sft login
+dodologin
 ```
 
-To forward current service user onto the container use special image (sftd required):
+To forward current service user onto the container (sftd required):
 ```
 docker run -it --rm \
     -w /workdir -v "$(PWD):/workdir" \
     -e "SFT_USER_ID=$(id -u)" \
     -e "SFT_USER_NAME=$(id -un)" \
     -v /var/run/sftd/management.sock:/var/run/sftd/management.sock \
-    dodopizza/centos:latest-sftd-host-mapping
-```
-
-
-# Build and push to registry
-
-```
-./docker.sh <build|push> <tag> [message]
+    dodopizza/centos:TAG
 ```
