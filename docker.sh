@@ -19,7 +19,6 @@ case "${action}" in
             ;;
     push  )
             docker push ${repo}:${tag}
-            docker push ${repo}:${tag}-sftd-host-mapping
             ;;
     test  )
             docker run -it --rm ${repo}:${tag}
