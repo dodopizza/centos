@@ -39,6 +39,9 @@ RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc \
     && yum install -y azure-cli \
     && yum clean all
 
+## azure kubernetes client
+RUN az aks install-cli
+
 ## ansible
 RUN pip --no-cache-dir install \
     'ansible==2.8.6' \
@@ -69,9 +72,6 @@ RUN curl -L https://github.com/drone/drone-cli/releases/download/v1.2.0/drone_li
 
 ## azure mysqlpump binary (5.6 issue)
 COPY bin/az-mysqlpump /usr/local/bin/
-
-## azure kubernetes client
-RUN az aks install-cli
 
 ## scaleft client
 RUN curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/scaleft.repo \
