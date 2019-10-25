@@ -98,6 +98,7 @@ RUN echo '------------------------------' \
     && pip2 --version \
     && pip3 --version \
     && az --version | head -n 1 \
+    && echo -n "kubectl: " && kubectl version --client=true --short=true \
     && ansible --version | head -n 1 \
     && ansible-lint --version \
     && azcopy --version \
@@ -109,7 +110,6 @@ RUN echo '------------------------------' \
     && drone --version \
     && sft --version \
     && az-mysqlpump --version \
-    && echo -n "kubectl: " && kubectl version --client=true --short=true \
     && echo '------------------------------'
 
 ## bash aliases
