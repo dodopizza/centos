@@ -27,6 +27,7 @@
 * mysqlpump  Ver 1.0.0 Distrib 5.7.27-30, for Linux (x86_64)
 * xtrabackup version 2.3.10 based on MySQL server 5.6.24 Linux (x86_64) (revision id: bd0d4403f36)
 * pt-online-schema-change 3.1.0
+* Terraform v0.12.12
 * drone version 1.2.0
 * sft version 1.40.8
 * az-mysqlpump  Ver 1.0.0 Distrib 5.7.24, for Linux (x86_64)

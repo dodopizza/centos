@@ -107,6 +107,7 @@ RUN echo '------------------------------' \
     && mysqlpump --version \
     && xtrabackup --version \
     && pt-online-schema-change --version \
+    && terraform --version \
     && drone --version \
     && sft --version \
     && az-mysqlpump --version \
