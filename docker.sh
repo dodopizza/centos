@@ -15,7 +15,7 @@ echo "[~] Tag '${tag}'"
 
 case "${action}" in
     build )
-            docker build --rm -f "Dockerfile" -t ${repo}:${tag} .
+            docker build --no-cache --rm -f "Dockerfile" -t ${repo}:${tag} .
             ;;
     push  )
             docker push ${repo}:${tag}

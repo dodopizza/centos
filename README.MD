@@ -9,16 +9,15 @@
 ./docker.sh <build|push|test> <tag> [message]
 ```
 
-# CHANGELOG
-
-## v2.0 (2019-10-25) INITIAL
+# SUMMARY
 * Jsonnet commandline interpreter v0.14.0
 * redis-cli 5.0.6
 * Python 2.7.5
 * Python 3.6.8
 * pip 19.3.1 from /usr/lib/python2.7/site-packages/pip (python 2.7)
 * pip 19.3.1 from /usr/local/lib/python3.6/site-packages/pip (python 3.6)
-* azure-cli 2.0.75
+* azure-cli                         2.0.76
+* kubectl: Client Version: v1.16.2
 * ansible 2.8.6
 * ansible-lint 4.1.0
 * azcopy version 10.3.1
@@ -27,11 +26,38 @@
 * mysqlpump  Ver 1.0.0 Distrib 5.7.27-30, for Linux (x86_64)
 * xtrabackup version 2.3.10 based on MySQL server 5.6.24 Linux (x86_64) (revision id: bd0d4403f36)
 * pt-online-schema-change 3.1.0
-* Terraform v0.12.12
+* Terraform v0.12.13
 * drone version 1.2.0
 * sft version 1.40.8
 * az-mysqlpump  Ver 1.0.0 Distrib 5.7.24, for Linux (x86_64)
+
+# CHANGELOG
+
+## v2.0.1 (2019-11-12)
+* azure-cli 2.0.76
+* Terraform v0.12.13
+
+## v2.0 (2019-10-25) INITIAL
+* Jsonnet commandline interpreter v0.14.0
+* redis-cli 5.0.6
+* Python 2.7.5
+* Python 3.6.8
+* pip 19.3.1 from /usr/lib/python2.7/site-packages/pip (python 2.7)
+* pip 19.3.1 from /usr/local/lib/python3.6/site-packages/pip (python 3.6)
+* azure-cli                         2.0.76
 * kubectl: Client Version: v1.16.2
+* ansible 2.8.6
+* ansible-lint 4.1.0
+* azcopy version 10.3.1
+* mysql  Ver 14.14 Distrib 5.7.27-30, for Linux (x86_64) using  6.2
+* mysqldump  Ver 10.13 Distrib 5.7.27-30, for Linux (x86_64)
+* mysqlpump  Ver 1.0.0 Distrib 5.7.27-30, for Linux (x86_64)
+* xtrabackup version 2.3.10 based on MySQL server 5.6.24 Linux (x86_64) (revision id: bd0d4403f36)
+* pt-online-schema-change 3.1.0
+* Terraform v0.12.13
+* drone version 1.2.0
+* sft version 1.40.8
+* az-mysqlpump  Ver 1.0.0 Distrib 5.7.24, for Linux (x86_64)
 
 
 # USAGE
