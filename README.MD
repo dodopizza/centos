@@ -17,21 +17,32 @@
 * pip 19.3.1 from /usr/lib/python2.7/site-packages/pip (python 2.7)
 * pip 19.3.1 from /usr/local/lib/python3.6/site-packages/pip (python 3.6)
 * azure-cli                         2.0.76
-* kubectl: Client Version: v1.16.2
-* ansible 2.8.6
+* kubectl: Client Version: v1.16.3
+* ansible 2.9.1
 * ansible-lint 4.1.0
-* azcopy version 10.3.1
-* mysql  Ver 14.14 Distrib 5.7.27-30, for Linux (x86_64) using  6.2
-* mysqldump  Ver 10.13 Distrib 5.7.27-30, for Linux (x86_64)
-* mysqlpump  Ver 1.0.0 Distrib 5.7.27-30, for Linux (x86_64)
+* azcopy version 10.3.2
+* mysql  Ver 14.14 Distrib 5.7.28-31, for Linux (x86_64) using  6.2
+* mysqldump  Ver 10.13 Distrib 5.7.28-31, for Linux (x86_64)
+* mysqlpump  Ver 1.0.0 Distrib 5.7.28-31, for Linux (x86_64)
 * xtrabackup version 2.3.10 based on MySQL server 5.6.24 Linux (x86_64) (revision id: bd0d4403f36)
 * pt-online-schema-change 3.1.0
-* Terraform v0.12.13
+* Terraform v0.12.15
 * drone version 1.2.0
 * sft version 1.40.8
 * az-mysqlpump  Ver 1.0.0 Distrib 5.7.24, for Linux (x86_64)
+* Docker version 1.13.1, build 7f2769b/1.13.1
 
 # CHANGELOG
+
+## v2.0.2 (2019-11-15)
+* kubectl: Client Version: v1.16.3
+* ansible 2.9.1
+* azcopy version 10.3.2
+* mysql  Ver 14.14 Distrib 5.7.28-31, for Linux (x86_64) using  6.2
+* mysqldump  Ver 10.13 Distrib 5.7.28-31, for Linux (x86_64)
+* mysqlpump  Ver 1.0.0 Distrib 5.7.28-31, for Linux (x86_64)
+* Terraform v0.12.15
++ Docker version 1.13.1, build 7f2769b/1.13.1
 
 ## v2.0.1 (2019-11-12)
 * azure-cli 2.0.76
@@ -45,19 +56,20 @@
 * pip 19.3.1 from /usr/lib/python2.7/site-packages/pip (python 2.7)
 * pip 19.3.1 from /usr/local/lib/python3.6/site-packages/pip (python 3.6)
 * azure-cli                         2.0.76
-* kubectl: Client Version: v1.16.2
-* ansible 2.8.6
+* kubectl: Client Version: v1.16.3
+* ansible 2.9.1
 * ansible-lint 4.1.0
-* azcopy version 10.3.1
-* mysql  Ver 14.14 Distrib 5.7.27-30, for Linux (x86_64) using  6.2
-* mysqldump  Ver 10.13 Distrib 5.7.27-30, for Linux (x86_64)
-* mysqlpump  Ver 1.0.0 Distrib 5.7.27-30, for Linux (x86_64)
+* azcopy version 10.3.2
+* mysql  Ver 14.14 Distrib 5.7.28-31, for Linux (x86_64) using  6.2
+* mysqldump  Ver 10.13 Distrib 5.7.28-31, for Linux (x86_64)
+* mysqlpump  Ver 1.0.0 Distrib 5.7.28-31, for Linux (x86_64)
 * xtrabackup version 2.3.10 based on MySQL server 5.6.24 Linux (x86_64) (revision id: bd0d4403f36)
 * pt-online-schema-change 3.1.0
-* Terraform v0.12.13
+* Terraform v0.12.15
 * drone version 1.2.0
 * sft version 1.40.8
 * az-mysqlpump  Ver 1.0.0 Distrib 5.7.24, for Linux (x86_64)
+* Docker version 1.13.1, build 7f2769b/1.13.1
 
 
 # USAGE
@@ -65,6 +77,11 @@
 Run default shell and mount current working directory:
 ```
 docker run -it --rm -w /workdir -v "$(PWD):/workdir" dodopizza/centos:TAG
+```
+
+Run default shell and mount current working directory with dind (2.0.2+):
+```
+docker run -it --rm -w /workdir -v "$(PWD):/workdir" -v /var/run/docker.sock:/var/run/docker.sock dodopizza/centos:2.0.2
 ```
 
 To login to dodo infrastructure just type:

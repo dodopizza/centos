@@ -44,7 +44,7 @@ RUN az aks install-cli
 
 ## ansible
 RUN pip --no-cache-dir install \
-    'ansible==2.8.6' \
+    'ansible==2.9.1' \
     'ansible-lint' \
     'pywinrm>=0.3.0' \
     'requests-ntlm'
@@ -61,7 +61,7 @@ RUN yum install -y https://repo.percona.com/yum/percona-release-latest.noarch.rp
     && yum clean all
 
 # ## terraform
-RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.13/terraform_0.12.13_linux_amd64.zip \
+RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.15/terraform_0.12.15_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
 
@@ -81,6 +81,11 @@ RUN curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/sc
     && yum install -y sudo \
     && yum clean all \
     && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config
+
+## docker-client for dind
+RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
+    && yum install -y docker-client \
+    && yum clean all
 
 ## scaleft user forwarding from host machine to container
 COPY  docker-entrypoint.sh /
@@ -111,6 +116,7 @@ RUN echo '------------------------------' \
     && ( drone --version || true ) \
     && sft --version \
     && az-mysqlpump --version \
+    && docker --version \
     && echo '------------------------------'
 
 ## bash aliases

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 
-function usage(){ echo "Usage: $(basename $0) <build|test|push> [tag = current branch] [message]" && exit 1; }
+function usage(){ echo "Usage: $(basename $0) <build|build-no-cache|test|push> [tag = current branch] [message]" && exit 1; }
 [ $# -lt 1 ] && usage;
 
 repo=dodopizza/centos
@@ -15,6 +15,9 @@ echo "[~] Tag '${tag}'"
 
 case "${action}" in
     build )
+            docker build --rm -f "Dockerfile" -t ${repo}:${tag} .
+            ;;
+    build-no-cache )
             docker build --no-cache --rm -f "Dockerfile" -t ${repo}:${tag} .
             ;;
     push  )
