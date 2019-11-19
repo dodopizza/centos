@@ -26,13 +26,16 @@
 * mysqlpump  Ver 1.0.0 Distrib 5.7.28-31, for Linux (x86_64)
 * xtrabackup version 2.3.10 based on MySQL server 5.6.24 Linux (x86_64) (revision id: bd0d4403f36)
 * pt-online-schema-change 3.1.0
-* Terraform v0.12.15
+* Terraform v0.12.16
 * drone version 1.2.0
 * sft version 1.40.8
 * az-mysqlpump  Ver 1.0.0 Distrib 5.7.24, for Linux (x86_64)
 * Docker version 1.13.1, build 7f2769b/1.13.1
 
 # CHANGELOG
+
+## v2.0.3 (2019-11-19)
+* Terraform v0.12.16
 
 ## v2.0.2 (2019-11-15)
 * kubectl: Client Version: v1.16.3

@@ -61,7 +61,7 @@ RUN yum install -y https://repo.percona.com/yum/percona-release-latest.noarch.rp
     && yum clean all
 
 # ## terraform
-RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.15/terraform_0.12.15_linux_amd64.zip \
+RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.16/terraform_0.12.16_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
 
