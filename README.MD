@@ -34,9 +34,6 @@
 
 # CHANGELOG
 
-## v2.0.3 (2019-11-19)
-* Terraform v0.12.16
-
 ## v2.0.2 (2019-11-15)
 * kubectl: Client Version: v1.16.3
 * ansible 2.9.1
@@ -44,7 +41,7 @@
 * mysql  Ver 14.14 Distrib 5.7.28-31, for Linux (x86_64) using  6.2
 * mysqldump  Ver 10.13 Distrib 5.7.28-31, for Linux (x86_64)
 * mysqlpump  Ver 1.0.0 Distrib 5.7.28-31, for Linux (x86_64)
-* Terraform v0.12.15
+* Terraform v0.12.16
 + Docker version 1.13.1, build 7f2769b/1.13.1
 
 ## v2.0.1 (2019-11-12)
