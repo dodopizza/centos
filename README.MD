@@ -11,12 +11,12 @@
 
 # SUMMARY
 * Jsonnet commandline interpreter v0.14.0
-* redis-cli 5.0.6
+* redis-cli 5.0.7
 * Python 2.7.5
 * Python 3.6.8
 * pip 19.3.1 from /usr/lib/python2.7/site-packages/pip (python 2.7)
 * pip 19.3.1 from /usr/local/lib/python3.6/site-packages/pip (python 3.6)
-* azure-cli                         2.0.76
+* azure-cli                         2.0.77
 * kubectl: Client Version: v1.16.3
 * ansible 2.9.1
 * ansible-lint 4.1.0
@@ -28,11 +28,16 @@
 * pt-online-schema-change 3.1.0
 * Terraform v0.12.16
 * drone version 1.2.0
-* sft version 1.40.8
+* sft version 1.41.0
 * az-mysqlpump  Ver 1.0.0 Distrib 5.7.24, for Linux (x86_64)
 * Docker version 1.13.1, build 7f2769b/1.13.1
 
 # CHANGELOG
+
+## v2.0.2 (2019-11-27)
+* redis-cli 5.0.7
+* azure-cli 2.0.77
+* sft version 1.41.0
 
 ## v2.0.2 (2019-11-15)
 * kubectl: Client Version: v1.16.3

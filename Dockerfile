@@ -29,6 +29,12 @@ RUN yum install -y epel-release \
     && curl https://bootstrap.pypa.io/get-pip.py | python3.6 \
     && pip install --upgrade pip
 
+## expect && pexpect
+RUN yum install -y expect \
+    && pip2 install pexpect==4.7.0 \
+    && pip3 install pexpect==4.7.0 \
+    && yum clean all
+
 ## Debug available versions
 RUN (    pip install 'ansible==' || true ) \
     && ( pip install 'azure-cli==' || true )
