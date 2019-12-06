@@ -63,11 +63,11 @@ RUN cd /tmp/ \
 ## mysql client + percona tools
 RUN yum install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm \
     && yum list | grep percona \
-    && yum install -y Percona-Server-client-57 percona-xtrabackup percona-toolkit \
+    && yum install -y Percona-Server-client-57 percona-xtrabackup percona-toolkit innotop \
     && yum clean all
 
 # ## terraform
-RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.16/terraform_0.12.16_linux_amd64.zip \
+RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.17/terraform_0.12.17_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
 
@@ -118,6 +118,7 @@ RUN echo '------------------------------' \
     && mysqlpump --version \
     && xtrabackup --version \
     && pt-online-schema-change --version \
+    && innotop --version \
     && terraform --version \
     && ( drone --version || true ) \
     && sft --version \
@@ -128,5 +129,5 @@ RUN echo '------------------------------' \
 ## bash aliases
 RUN echo $' \n\
     alias k="kubectl" \n\
-    alias dodologin="az login && sft enroll && sft login" \n\
+    alias dodo-login="az login && sft enroll && sft login" \n\
     ' >> ~/.bashrc
