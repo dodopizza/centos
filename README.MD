@@ -108,3 +108,40 @@ docker run -it --rm \
     -v /var/run/sftd/management.sock:/var/run/sftd/management.sock \
     dodopizza/centos:TAG
 ```
+
+To use convenient command line function (dodo-centos), add following code to ~/.bashrc (bash) or ~/.zshrc (zsh)
+```
+function dodo-centos() {
+  local version=2.0.2
+  local DRONE_SERVER=https://drone.dodois.ru
+  local DRONE_TOKEN="<place here your drone token from drone.dodois.ru>"
+  docker run -it --rm \
+    -w /workdir -v "${PWD}:/workdir" \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    --env DRONE_SERVER=${DRONE_SERVER} \
+    --env DRONE_TOKEN=${DRONE_TOKEN} \
+    dodopizza/centos:$version
+}
+```
+
+To use convenient command line function (dodo-centos) for Windows, open pwsh profile with command
+```
+New-Item $profile -Type File -Force
+notepad.exe $profile
+```
+
+and add following code
+```
+Function dodo-centos {
+  $version="2.0.2"
+  $DRONE_SERVER="https://drone.dodois.ru"
+  $DRONE_TOKEN="<place here your drone token from drone.dodois.ru>"
+  docker run -it --rm `
+    --privileged `
+    -w /workdir -v "${PWD}:/workdir" `
+    -v //var/run/docker.sock:/var/run/docker.sock `
+    --env DRONE_SERVER=$DRONE_SERVER `
+    --env DRONE_TOKEN=$DRONE_TOKEN `
+    dodopizza/centos:$version
+}
+```
