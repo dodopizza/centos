@@ -93,6 +93,9 @@ RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.18/
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
 
+
+## bin/pt-online-schema-change temporary patch
+RUN pt-online-schema-change --version || true
 COPY bin/pt-online-schema-change-3.0.14-dev /usr/bin/pt-online-schema-change
 
 ## scaleft user forwarding from host machine to container
