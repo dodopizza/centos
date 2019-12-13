@@ -66,11 +66,6 @@ RUN yum install -y https://repo.percona.com/yum/percona-release-latest.noarch.rp
     && yum install -y Percona-Server-client-57 percona-xtrabackup percona-toolkit innotop \
     && yum clean all
 
-# ## terraform
-RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.17/terraform_0.12.17_linux_amd64.zip \
-    && unzip /tmp/terraform.zip -d /usr/bin/ \
-    && rm -f /tmp/terraform.zip
-
 ## drone ci
 RUN curl -L https://github.com/drone/drone-cli/releases/download/v1.2.0/drone_linux_arm64.tar.gz | tar zx \
     && chmod +x ./drone \
@@ -92,6 +87,13 @@ RUN curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/sc
 RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
     && yum install -y docker-client \
     && yum clean all
+
+## terraform
+RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.18/terraform_0.12.18_linux_amd64.zip \
+    && unzip /tmp/terraform.zip -d /usr/bin/ \
+    && rm -f /tmp/terraform.zip
+
+COPY bin/pt-online-schema-change-3.0.14-dev /usr/bin/pt-online-schema-change
 
 ## scaleft user forwarding from host machine to container
 COPY  docker-entrypoint.sh /

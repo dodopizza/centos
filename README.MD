@@ -35,6 +35,16 @@
 
 # CHANGELOG
 
+## v2.0.3 (2019-12-13)
+* pt-online-schema-change 3.0.14-dev
+* redis-cli 5.0.7
+* azure-cli 2.0.77
+* kubectl: Client Version: v1.17.0
+* ansible-lint 4.2.0
+* azcopy version 10.3.3
+* Terraform v0.12.18
+* sft version 1.41.0
+
 ## v2.0.2 (2019-12-06)
 * innotop  Ver 1.12.0
 * Terraform v0.12.17
@@ -60,24 +70,25 @@
 
 ## v2.0 (2019-10-25) INITIAL
 * Jsonnet commandline interpreter v0.14.0
-* redis-cli 5.0.6
+* redis-cli 5.0.7
 * Python 2.7.5
 * Python 3.6.8
 * pip 19.3.1 from /usr/lib/python2.7/site-packages/pip (python 2.7)
 * pip 19.3.1 from /usr/local/lib/python3.6/site-packages/pip (python 3.6)
-* azure-cli                         2.0.76
-* kubectl: Client Version: v1.16.3
+* azure-cli                         2.0.77
+* kubectl: Client Version: v1.17.0
 * ansible 2.9.1
-* ansible-lint 4.1.0
-* azcopy version 10.3.2
+* ansible-lint 4.2.0
+* azcopy version 10.3.3
 * mysql  Ver 14.14 Distrib 5.7.28-31, for Linux (x86_64) using  6.2
 * mysqldump  Ver 10.13 Distrib 5.7.28-31, for Linux (x86_64)
 * mysqlpump  Ver 1.0.0 Distrib 5.7.28-31, for Linux (x86_64)
 * xtrabackup version 2.3.10 based on MySQL server 5.6.24 Linux (x86_64) (revision id: bd0d4403f36)
-* pt-online-schema-change 3.1.0
-* Terraform v0.12.15
+* pt-online-schema-change 3.0.14-dev
+* innotop  Ver 1.12.0
+* Terraform v0.12.18
 * drone version 1.2.0
-* sft version 1.40.8
+* sft version 1.41.0
 * az-mysqlpump  Ver 1.0.0 Distrib 5.7.24, for Linux (x86_64)
 * Docker version 1.13.1, build 7f2769b/1.13.1
 
@@ -91,12 +102,12 @@ docker run -it --rm -w /workdir -v "$(PWD):/workdir" dodopizza/centos:TAG
 
 Run default shell and mount current working directory with dind (2.0.2+):
 ```
-docker run -it --rm -w /workdir -v "$(PWD):/workdir" -v /var/run/docker.sock:/var/run/docker.sock dodopizza/centos:2.0.2
+docker run -it --rm -w /workdir -v "$(PWD):/workdir" -v /var/run/docker.sock:/var/run/docker.sock dodopizza/centos:TAG
 ```
 
 To login to dodo infrastructure just type:
 ```
-dodologin
+dodo-login
 ```
 
 To forward current service user onto the container (sftd required):
