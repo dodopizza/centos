@@ -20,7 +20,7 @@ COPY --from=jsonnet_builder /workdir/jsonnetfmt /usr/local/bin/
 COPY --from=redis_builder /workdir/redis-stable/src/redis-cli /usr/local/bin/
 
 RUN yum install -y epel-release \
-    && yum install -y python36 jq unzip \
+    && yum install -y python36 jq unzip git \
     && yum clean all \
     && alternatives --install /usr/bin/python python /usr/bin/python2.7 50 \
     && alternatives --install /usr/bin/python python /usr/bin/python3.6 60 \

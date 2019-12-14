@@ -96,22 +96,22 @@
 # USAGE
 
 Run default shell and mount current working directory:
-```
+```bash
 docker run -it --rm -w /workdir -v "$(PWD):/workdir" dodopizza/centos:TAG
 ```
 
 Run default shell and mount current working directory with dind (2.0.2+):
-```
+```bash
 docker run -it --rm -w /workdir -v "$(PWD):/workdir" -v /var/run/docker.sock:/var/run/docker.sock dodopizza/centos:TAG
 ```
 
 To login to dodo infrastructure just type:
-```
+```bash
 dodo-login
 ```
 
 To forward current service user onto the container (sftd required):
-```
+```bash
 docker run -it --rm \
     -w /workdir -v "$(PWD):/workdir" \
     -e "SFT_USER_ID=$(id -u)" \
@@ -121,9 +121,9 @@ docker run -it --rm \
 ```
 
 To use convenient command line function (dodo-centos), add following code to ~/.bashrc (bash) or ~/.zshrc (zsh)
-```
+```bash
 function dodo-centos() {
-  local version=2.0.2
+  local version=2.0.3
   local DRONE_SERVER=https://drone.dodois.ru
   local DRONE_TOKEN="<place here your drone token from drone.dodois.ru>"
   docker run -it --rm \
@@ -136,15 +136,15 @@ function dodo-centos() {
 ```
 
 To use convenient command line function (dodo-centos) for Windows, open pwsh profile with command
-```
+```powershell
 New-Item $profile -Type File -Force
 notepad.exe $profile
 ```
 
 and add following code
-```
+```powershell
 Function dodo-centos {
-  $version="2.0.2"
+  $version="2.0.3"
   $DRONE_SERVER="https://drone.dodois.ru"
   $DRONE_TOKEN="<place here your drone token from drone.dodois.ru>"
   docker run -it --rm `
