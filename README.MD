@@ -128,7 +128,7 @@ function dodo-centos() {
   local DRONE_TOKEN="<place here your drone token from drone.dodois.ru>"
   docker run -it --rm \
     -w /workdir \
-    -v "${HOME}/.ssh:/root/.ssh" \
+    -v "${HOME}/.ssh:/root/.ssh:ro" \
     -v "${PWD}:/workdir" \
     -v /var/run/docker.sock:/var/run/docker.sock \
     --env DRONE_SERVER=${DRONE_SERVER} \
@@ -151,7 +151,9 @@ Function dodo-centos {
   $DRONE_TOKEN="<place here your drone token from drone.dodois.ru>"
   docker run -it --rm `
     --privileged `
-    -w /workdir -v "${PWD}:/workdir" `
+    -w /workdir `
+    -v "${HOME}/.ssh:/root/.ssh:ro" `
+    -v "${PWD}:/workdir" `
     -v //var/run/docker.sock:/var/run/docker.sock `
     --env DRONE_SERVER=$DRONE_SERVER `
     --env DRONE_TOKEN=$DRONE_TOKEN `
