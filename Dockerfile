@@ -106,6 +106,8 @@ CMD ["/bin/bash"]
 
 ## VERSION INFO FOR CHANGELOG
 RUN echo '------------------------------' \
+    && jq --version \
+    && git --version \
     && jsonnet --version \
     && redis-cli --version \
     && python --version \
