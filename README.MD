@@ -130,7 +130,7 @@ To use convenient command line function (dodo-centos), add following code to ~/.
 function dodo-centos() {
   local version=2.0.3
   local DRONE_SERVER=https://drone.dodois.ru
-  local DRONE_TOKEN="<place here your drone token from drone.dodois.ru>"
+  local DRONE_TOKEN="Your_drone_token"
   docker run -it --rm \
     -w /workdir \
     -v "${PWD}:/workdir" \
@@ -152,7 +152,7 @@ and add following code
 Function dodo-centos {
   $version="2.0.3"
   $DRONE_SERVER="https://drone.dodois.ru"
-  $DRONE_TOKEN="<place here your drone token from drone.dodois.ru>"
+  $DRONE_TOKEN="Your_drone_token"
   docker run -it --rm `
     --privileged `
     -w /workdir `
