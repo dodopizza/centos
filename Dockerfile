@@ -88,6 +88,9 @@ RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docke
     && yum install -y docker-client \
     && yum clean all
 
+## docker-compose for dind
+RUN pip install docker-compose
+
 ## terraform
 RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.18/terraform_0.12.18_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
@@ -130,6 +133,7 @@ RUN echo '------------------------------' \
     && sft --version \
     && az-mysqlpump --version \
     && docker --version \
+    && docker-compose --version \
     && echo '------------------------------'
 
 ## bash aliases

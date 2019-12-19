@@ -6,7 +6,7 @@
 # BUILD/PUSH/TEST IMAGE
 
 ```
-./docker.sh <build|push|test> <tag> [message]
+./docker.sh <build|build-no-cache|push|test> <tag> [message]
 ```
 
 # SUMMARY
@@ -18,7 +18,7 @@
 * Python 3.6.8
 * pip 19.3.1 from /usr/lib/python2.7/site-packages/pip (python 2.7)
 * pip 19.3.1 from /usr/local/lib/python3.6/site-packages/pip (python 3.6)
-* azure-cli                         2.0.77
+* azure-cli                         2.0.78
 * kubectl: Client Version: v1.17.0
 * ansible 2.9.1
 * ansible-lint 4.2.0
@@ -34,8 +34,13 @@
 * sft version 1.41.0
 * az-mysqlpump  Ver 1.0.0 Distrib 5.7.24, for Linux (x86_64)
 * Docker version 1.13.1, build 7f2769b/1.13.1
+* docker-compose version 1.25.0, build b42d419
 
 # CHANGELOG
+
+## v2.0.4 (2019-12-20)
+* azure-cli 2.0.78
+* docker-compose version 1.25.0, build b42d419
 
 ## v2.0.3 (2019-12-16)
 * git version 1.8.3.1
