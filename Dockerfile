@@ -78,7 +78,7 @@ COPY bin/az-mysqlpump /usr/local/bin/
 RUN curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/scaleft.repo \
     && yes | rpm --import https://dist.scaleft.com/pki/scaleft_rpm_key.asc \
     && yum install -y scaleft-client-tools.x86_64 \
-    && yum install -y openssh-clients \
+    && yum install -y openssh-clients sshpass \
     && yum install -y sudo \
     && yum clean all \
     && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config
@@ -92,7 +92,7 @@ RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docke
 RUN pip install docker-compose
 
 ## terraform
-RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.18/terraform_0.12.18_linux_amd64.zip \
+RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.21/terraform_0.12.21_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
 
