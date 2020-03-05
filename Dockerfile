@@ -100,6 +100,14 @@ RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.21/
 RUN pt-online-schema-change --version || true
 COPY bin/pt-online-schema-change-3.0.14-dev /usr/bin/pt-online-schema-change
 
+## helm
+RUN cd /tmp/ \
+    && helm_version=2.11.0 \
+    && curl -L https://get.helm.sh/helm-v${helm_version}-linux-amd64.tar.gz | tar zx \
+    && mv -f linux-amd64/helm /usr/bin/helm${helm_version} \
+    && ln -f -s /usr/bin/helm${helm_version} /usr/bin/helm \
+    && rm -rf linux-amd64
+
 ## scaleft user forwarding from host machine to container
 COPY  docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
@@ -134,6 +142,7 @@ RUN echo '------------------------------' \
     && az-mysqlpump --version \
     && docker --version \
     && docker-compose --version \
+    && echo -n "helm: " && helm version --client --short \
     && echo '------------------------------'
 
 ## bash aliases

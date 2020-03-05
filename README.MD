@@ -33,10 +33,14 @@
 * drone version 1.2.0
 * sft version 1.41.0
 * az-mysqlpump  Ver 1.0.0 Distrib 5.7.24, for Linux (x86_64)
-* Docker version 1.13.1, build 4ef4b30/1.13.1
+* Docker version 1.13.1, build cccb291/1.13.1
 * docker-compose version 1.25.4, build unknown
+* helm: Client: v2.11.0+g2e55dbe
 
 # CHANGELOG
+
+## v2.0.6 (2020-03-05)
+* helm: Client: v2.11.0+g2e55dbe
 
 ## v2.0.5 (2020-03-03)
 * jq-1.6
