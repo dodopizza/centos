@@ -13,13 +13,13 @@
 * jq-1.6
 * git version 1.8.3.1
 * Jsonnet commandline interpreter v0.15.0
-* redis-cli 5.0.7
+* redis-cli 5.0.8
 * Python 2.7.5
 * Python 3.6.8
 * pip 20.0.2 from /usr/lib/python2.7/site-packages/pip (python 2.7)
 * pip 20.0.2 from /usr/local/lib/python3.6/site-packages/pip (python 3.6)
-* azure-cli                          2.1.0
-* kubectl: Client Version: v1.17.3
+* azure-cli                          2.2.0
+* kubectl: Client Version: v1.17.4
 * ansible 2.9.1
 * ansible-lint 4.2.0
 * azcopy version 10.3.4
@@ -29,15 +29,23 @@
 * xtrabackup version 2.3.10 based on MySQL server 5.6.24 Linux (x86_64) (revision id: bd0d4403f36)
 * pt-online-schema-change 3.0.14-dev
 * innotop  Ver 1.12.0
-* Terraform v0.12.21
+* Terraform v0.12.23
 * drone version 1.2.0
 * sft version 1.41.0
 * az-mysqlpump  Ver 1.0.0 Distrib 5.7.24, for Linux (x86_64)
 * Docker version 1.13.1, build cccb291/1.13.1
 * docker-compose version 1.25.4, build unknown
 * helm: Client: v2.11.0+g2e55dbe
+* promtool, version 2.16.0 (branch: HEAD, revision: b90be6f32a33c03163d700e1452b54454ddce0ec)
 
 # CHANGELOG
+
+## v2.0.7 (2020-03-16)
+* redis-cli 5.0.8
+* azure-cli 2.2.0
+* kubectl: Client Version: v1.17.4
+* Terraform v0.12.23
+* promtool, version 2.16.0 (branch: HEAD, revision: b90be6f32a33c03163d700e1452b54454ddce0ec)
 
 ## v2.0.6 (2020-03-05)
 * helm: Client: v2.11.0+g2e55dbe
