@@ -92,7 +92,7 @@ RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docke
 RUN pip install docker-compose
 
 ## terraform
-RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.21/terraform_0.12.21_linux_amd64.zip \
+RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.23/terraform_0.12.23_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
 
@@ -112,6 +112,13 @@ RUN cd /tmp/ \
 COPY  docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/bin/bash"]
+
+## promtool from prometheus
+RUN cd /tmp/ \
+    && prometheus_version=2.16.0 \
+    && curl -L https://github.com/prometheus/prometheus/releases/download/v${prometheus_version}/prometheus-${prometheus_version}.linux-amd64.tar.gz | tar zx \
+    && cp -f prometheus-${prometheus_version}.linux-amd64/promtool /usr/bin/ \
+    && rm -rf prometheus-${prometheus_version}.linux-amd64
 
 ## ----------------------------------------------------------------------------
 
@@ -143,6 +150,7 @@ RUN echo '------------------------------' \
     && docker --version \
     && docker-compose --version \
     && echo -n "helm: " && helm version --client --short \
+    && ( promtool --version 2>&1 | grep promtool ) \
     && echo '------------------------------'
 
 ## bash aliases
