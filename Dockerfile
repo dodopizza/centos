@@ -126,6 +126,10 @@ COPY  docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/bin/bash"]
 
+## bash aliases
+COPY bash-aliases.sh /
+RUN echo -e '\nsource /bash-aliases.sh' >> ~/.bashrc
+
 ## ----------------------------------------------------------------------------
 
 ## VERSION INFO FOR CHANGELOG
@@ -159,9 +163,3 @@ RUN echo '------------------------------' \
     && echo -n "werf: " && werf version \
     && ( promtool --version 2>&1 | grep promtool ) \
     && echo '------------------------------'
-
-## bash aliases
-RUN echo $' \n\
-    alias k="kubectl" \n\
-    alias dodo-login="az login && sft enroll && sft login" \n\
-    ' >> ~/.bashrc
