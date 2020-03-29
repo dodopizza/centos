@@ -108,10 +108,11 @@ RUN cd /tmp/ \
     && ln -f -s /usr/bin/helm${helm_version} /usr/bin/helm \
     && rm -rf linux-amd64
 
-## scaleft user forwarding from host machine to container
-COPY  docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["/bin/bash"]
+## werf
+RUN werf_version=1.1.8 \
+    && curl -L https://dl.bintray.com/flant/werf/v1.1.8/werf-linux-amd64-v${werf_version} -o /tmp/werf \
+    && chmod +x /tmp/werf \
+    && sudo mv /tmp/werf /usr/local/bin/werf
 
 ## promtool from prometheus
 RUN cd /tmp/ \
@@ -119,6 +120,11 @@ RUN cd /tmp/ \
     && curl -L https://github.com/prometheus/prometheus/releases/download/v${prometheus_version}/prometheus-${prometheus_version}.linux-amd64.tar.gz | tar zx \
     && cp -f prometheus-${prometheus_version}.linux-amd64/promtool /usr/bin/ \
     && rm -rf prometheus-${prometheus_version}.linux-amd64
+
+## scaleft user forwarding from host machine to container
+COPY  docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["/bin/bash"]
 
 ## ----------------------------------------------------------------------------
 
@@ -150,6 +156,7 @@ RUN echo '------------------------------' \
     && docker --version \
     && docker-compose --version \
     && echo -n "helm: " && helm version --client --short \
+    && echo -n "werf: " && werf version \
     && ( promtool --version 2>&1 | grep promtool ) \
     && echo '------------------------------'
 
