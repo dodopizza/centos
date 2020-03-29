@@ -161,7 +161,7 @@ docker run -it --rm \
 To use convenient command line function (dodo-centos), add following code to ~/.bashrc (bash) or ~/.zshrc (zsh)
 ```bash
 function dodo-centos() {
-  local version=2.0.6
+  local version=2.0.8
   local DRONE_SERVER=https://drone.dodois.ru
   local DRONE_TOKEN="Your_drone_token"
   docker run -it --rm \
@@ -183,7 +183,7 @@ notepad.exe $profile
 and add following code
 ```powershell
 Function dodo-centos {
-  $version="2.0.6"
+  $version="2.0.8"
   $DRONE_SERVER="https://drone.dodois.ru"
   $DRONE_TOKEN="Your_drone_token"
   docker run -it --rm `
