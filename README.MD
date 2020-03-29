@@ -158,7 +158,7 @@ docker run -it --rm \
     dodopizza/centos:TAG
 ```
 
-To use convenient command line function (dodo-centos), add following code to ~/.bashrc (bash) or ~/.zshrc (zsh)
+To use convenient command line function (dodo-centos), add following code to ~/.bashrc (bash) or ~/.zshrc (zsh) 
 ```bash
 function dodo-centos() {
   local version=2.0.8
