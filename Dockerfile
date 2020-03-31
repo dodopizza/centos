@@ -96,6 +96,11 @@ RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.23/
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
 
+# packer
+RUN curl -o /tmp/packer.zip https://releases.hashicorp.com/packer/1.5.4/packer_1.5.4_linux_amd64.zip \
+    && unzip /tmp/packer.zip -d /usr/bin/ \
+    && rm -f /tmp/packer.zip
+
 ## bin/pt-online-schema-change temporary patch
 RUN pt-online-schema-change --version || true
 COPY bin/pt-online-schema-change-3.0.14-dev /usr/bin/pt-online-schema-change
@@ -154,6 +159,7 @@ RUN echo '------------------------------' \
     && pt-online-schema-change --version \
     && innotop --version \
     && terraform --version \
+    && packer --version \
     && ( drone --version || true ) \
     && sft --version \
     && az-mysqlpump --version \
