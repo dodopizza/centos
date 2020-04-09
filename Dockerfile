@@ -105,6 +105,9 @@ RUN curl -o /tmp/packer.zip https://releases.hashicorp.com/packer/1.5.4/packer_1
 RUN pt-online-schema-change --version || true
 COPY bin/pt-online-schema-change-3.0.14-dev /usr/bin/pt-online-schema-change
 
+## bin/gh-ost temporary patch
+COPY bin/gh-ost /usr/bin/gh-ost
+
 ## helm
 RUN cd /tmp/ \
     && helm_version=2.11.0 \
@@ -157,6 +160,7 @@ RUN echo '------------------------------' \
     && mysqlpump --version \
     && xtrabackup --version \
     && pt-online-schema-change --version \
+    && gh-ost --version \
     && innotop --version \
     && terraform --version \
     && packer --version \
