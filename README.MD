@@ -38,11 +38,13 @@
 * docker-compose version 1.25.4, build unknown
 * helm: Client: v2.11.0+g2e55dbe
 * promtool, version 2.16.0 (branch: HEAD, revision: b90be6f32a33c03163d700e1452b54454ddce0ec)
+* gh-ost (revision 13b5f48ca5e7cc83bf7af2455785304c2c4385fb)
 
 # CHANGELOG
 
 ## v2.0.9 (2020-04-01)
 * packer 1.5.4
+* gh-ost (revision 13b5f48ca5e7cc83bf7af2455785304c2c4385fb)
 
 ## v2.0.7 (2020-03-16)
 * redis-cli 5.0.8
