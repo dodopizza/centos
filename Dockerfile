@@ -92,12 +92,14 @@ RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docke
 RUN pip install docker-compose
 
 ## terraform
-RUN curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.23/terraform_0.12.23_linux_amd64.zip \
+RUN terraform_version=0.12.24 \
+    && curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
 
 # packer
- RUN curl -o /tmp/packer.zip https://releases.hashicorp.com/packer/1.5.4/packer_1.5.4_linux_amd64.zip \
+RUN packer_version=1.5.4 \
+     && curl -o /tmp/packer.zip https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_linux_amd64.zip \
      && unzip /tmp/packer.zip -d /usr/bin/ \
      && rm -f /tmp/packer.zip
 
@@ -130,12 +132,12 @@ RUN cd /tmp/ \
     && rm -rf prometheus-${prometheus_version}.linux-amd64
 
 ## scaleft user forwarding from host machine to container
-COPY  docker-entrypoint.sh /
+COPY  scripts/docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/bin/bash"]
 
 ## bash aliases
-COPY bash-aliases.sh /
+COPY scripts/bash-aliases.sh /
 RUN echo -e '\nsource /bash-aliases.sh' >> ~/.bashrc
 
 ## ----------------------------------------------------------------------------
@@ -150,7 +152,7 @@ RUN echo '------------------------------' \
     && python3.6 --version \
     && pip2 --version \
     && pip3 --version \
-    && az --version | head -n 1 \
+    && az --version | head -n 1 2> /dev/null \
     && echo -n "kubectl: " && kubectl version --client=true --short=true \
     && ansible --version | head -n 1 \
     && ansible-lint --version \
