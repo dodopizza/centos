@@ -1,5 +1,8 @@
 default:
   image: busybox
+  tags:
+    - dodo
+    - dev
 
 stages:
   - build
