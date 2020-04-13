@@ -23,6 +23,9 @@ stages:
 
 build:
   stage: build
+  except:
+    changes:
+      - "*.MD"
   image: docker
   extends:
     - .common/dind_service
