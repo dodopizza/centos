@@ -1,0 +1,42 @@
+default:
+  image: busybox
+
+stages:
+  - build
+
+.common/dind_service:
+  services:
+    - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay
+    DOCKER_TLS_CERTDIR: ""
+    GIT_SSL_NO_VERIFY: "1"
+  before_script:
+    - docker info
+    - docker ps
+  after_script:
+    - docker images
+
+build:
+  stage: build
+  image: docker
+  extends:
+    - .common/dind_service
+  variables:
+    IMAGE_TAG: $CI_COMMIT_BRANCH
+    DOCKERHUB_REGISTRY_IMAGE: dodopizza/centos
+  script: 
+    - |
+        function env64(){ echo -n $@ | base64 -d; }
+
+        docker login -u `env64 $DOCKERHUB_REGISTRY_USER_BASE64` -p `env64 $DOCKERHUB_REGISTRY_PASSWORD_BASE64`
+        docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+        docker build \
+          --cache-from $CI_REGISTRY_IMAGE:$IMAGE_TAG \
+          --tag $CI_REGISTRY_IMAGE:$IMAGE_TAG \
+          --tag $DOCKERHUB_REGISTRY_IMAGE:$IMAGE_TAG .
+    
+        docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG
+        docker push $DOCKERHUB_REGISTRY_IMAGE:$IMAGE_TAG
