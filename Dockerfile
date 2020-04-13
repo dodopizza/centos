@@ -67,21 +67,13 @@ RUN yum install -y https://repo.percona.com/yum/percona-release-latest.noarch.rp
     && yum clean all
 
 ## drone ci
-RUN curl -L https://github.com/drone/drone-cli/releases/download/v1.2.0/drone_linux_arm64.tar.gz | tar zx \
+RUN drone_version=1.2.1 \
+    && curl -L https://github.com/drone/drone-cli/releases/download/v${drone_version}/drone_linux_amd64.tar.gz | tar zx \
     && chmod +x ./drone \
     && mv ./drone /usr/bin/
 
 ## azure mysqlpump binary (5.6 issue)
 COPY bin/az-mysqlpump /usr/local/bin/
-
-## scaleft client
-RUN curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/scaleft.repo \
-    && yes | rpm --import https://dist.scaleft.com/pki/scaleft_rpm_key.asc \
-    && yum install -y scaleft-client-tools.x86_64 \
-    && yum install -y openssh-clients sshpass \
-    && yum install -y sudo \
-    && yum clean all \
-    && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config
 
 ## docker-client for dind
 RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
@@ -90,12 +82,6 @@ RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docke
 
 ## docker-compose for dind
 RUN pip install docker-compose
-
-## terraform
-RUN terraform_version=0.12.24 \
-    && curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip \
-    && unzip /tmp/terraform.zip -d /usr/bin/ \
-    && rm -f /tmp/terraform.zip
 
 # packer
 RUN packer_version=1.5.4 \
@@ -131,6 +117,21 @@ RUN cd /tmp/ \
     && cp -f prometheus-${prometheus_version}.linux-amd64/promtool /usr/bin/ \
     && rm -rf prometheus-${prometheus_version}.linux-amd64
 
+## terraform
+RUN terraform_version=0.12.24 \
+    && curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip \
+    && unzip /tmp/terraform.zip -d /usr/bin/ \
+    && rm -f /tmp/terraform.zip
+
+## scaleft client
+RUN curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/scaleft.repo \
+    && yes | rpm --import https://dist.scaleft.com/pki/scaleft_rpm_key.asc \
+    && yum install -y scaleft-client-tools.x86_64 \
+    && yum install -y openssh-clients sshpass \
+    && yum install -y sudo \
+    && yum clean all \
+    && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config
+
 ## scaleft user forwarding from host machine to container
 COPY  scripts/docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
@@ -152,7 +153,7 @@ RUN echo '-------------------------------' \
     && python3.6 --version \
     && pip2 --version \
     && pip3 --version \
-    && az --version | head -n 1 2> /dev/null \
+    && ( az --version 2> /dev/null ) | head -n 1 \
     && echo -n "kubectl: " && kubectl version --client=true --short=true \
     && ansible --version | head -n 1 \
     && ansible-lint --version \
