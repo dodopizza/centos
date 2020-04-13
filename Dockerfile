@@ -83,11 +83,12 @@ RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docke
 ## docker-compose for dind
 RUN pip install docker-compose
 
-# packer
-RUN packer_version=1.5.4 \
-     && curl -o /tmp/packer.zip https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_linux_amd64.zip \
-     && unzip /tmp/packer.zip -d /usr/bin/ \
-     && rm -f /tmp/packer.zip
+# packer (hashicorp-packer) issue: https://github.com/cracklib/cracklib/issues/7
+RUN packer_version=1.5.5 \
+    && curl -o /tmp/packer.zip https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_linux_amd64.zip \
+    && unzip /tmp/packer.zip -d /tmp/ \
+    && mv -f /tmp/packer /usr/bin/hashicorp-packer \
+    && rm -f /tmp/packer.zip
 
 ## bin/pt-online-schema-change temporary patch
 RUN pt-online-schema-change --version || true
@@ -166,7 +167,7 @@ RUN echo '-------------------------------' \
     && gh-ost --version \
     && innotop --version \
     && terraform --version \
-    && packer --version \
+    && echo -n "hashicorp-packer: " && hashicorp-packer --version \
     && ( drone --version || true ) \
     && sft --version \
     && az-mysqlpump --version \
