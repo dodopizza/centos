@@ -30,15 +30,23 @@
 * pt-online-schema-change 3.0.14-dev
 * innotop  Ver 1.12.0
 * Terraform v0.12.23
+* Packer v1.5.4
 * drone version 1.2.0
 * sft version 1.41.0
 * az-mysqlpump  Ver 1.0.0 Distrib 5.7.24, for Linux (x86_64)
 * Docker version 1.13.1, build cccb291/1.13.1
 * docker-compose version 1.25.4, build unknown
 * helm: Client: v2.11.0+g2e55dbe
+* werf v1.1.8
 * promtool, version 2.16.0 (branch: HEAD, revision: b90be6f32a33c03163d700e1452b54454ddce0ec)
+* gh-ost (revision 13b5f48ca5e7cc83bf7af2455785304c2c4385fb)
 
 # CHANGELOG
+
+## v2.0.8 (2020-03-29)
+* werf (1.1.8)
+* packer (1.5.4)
+* gh-ost (revision 13b5f48ca5e7cc83bf7af2455785304c2c4385fb)
 
 ## v2.0.7 (2020-03-16)
 * redis-cli 5.0.8
@@ -158,7 +166,7 @@ docker run -it --rm \
     dodopizza/centos:TAG
 ```
 
-To use convenient command line function (dodo-centos), add following code to ~/.bashrc (bash) or ~/.zshrc (zsh) 
+To use convenient command line function (dodo-centos), add following code to ~/.bashrc (bash) or ~/.zshrc (zsh)
 ```bash
 function dodo-centos() {
   local version=2.0.8
