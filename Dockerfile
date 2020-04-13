@@ -143,7 +143,7 @@ RUN echo -e '\nsource /bash-aliases.sh' >> ~/.bashrc
 ## ----------------------------------------------------------------------------
 
 ## VERSION INFO FOR CHANGELOG
-RUN echo '------------------------------' \
+RUN echo '-------------------------------' \
     && jq --version \
     && git --version \
     && jsonnet --version \
@@ -174,4 +174,4 @@ RUN echo '------------------------------' \
     && echo -n "helm: " && helm version --client --short \
     && echo -n "werf: " && werf version \
     && ( promtool --version 2>&1 | grep promtool ) \
-    && echo '------------------------------'
+    && echo '-------------------------------'
