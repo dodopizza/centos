@@ -108,7 +108,7 @@ RUN cd /tmp/ \
 RUN werf_version=1.1.8 \
     && curl -L https://dl.bintray.com/flant/werf/v1.1.8/werf-linux-amd64-v${werf_version} -o /tmp/werf \
     && chmod +x /tmp/werf \
-    && sudo mv /tmp/werf /usr/local/bin/werf
+    && mv /tmp/werf /usr/local/bin/werf
 
 ## promtool from prometheus
 RUN cd /tmp/ \
