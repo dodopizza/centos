@@ -164,10 +164,10 @@ RUN echo '-------------------------------' \
     && mysqlpump --version \
     && xtrabackup --version \
     && pt-online-schema-change --version \
-    && gh-ost --version \
+    && echo -n "gh-ost: " && gh-ost --version \
     && innotop --version \
     && terraform --version \
-    && echo -n "hashicorp-packer: " && hashicorp-packer --version \
+    && echo -n "packer (hashicorp-packer): " && hashicorp-packer --version \
     && ( drone --version || true ) \
     && sft --version \
     && az-mysqlpump --version \
