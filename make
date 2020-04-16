@@ -15,20 +15,29 @@ echo "[~] Tag '${tag}'"
 
 case "${action}" in
     build )
-            docker build --rm -f "Dockerfile" -t ${repo}:${tag} .
-            ;;
+        DOCKER_BUILDKIT=1 docker build --rm \
+          --progress=plain \
+          --build-arg BUILDKIT_INLINE_CACHE=1 \
+          --cache-from ${repo}:${tag} \
+          --tag ${repo}:${tag} \
+          .
+        ;;
     build-no-cache )
-            docker build --no-cache --rm -f "Dockerfile" -t ${repo}:${tag} .
-            ;;
-    push  )
-            docker push ${repo}:${tag}
-            ;;
-    test  )
-            docker run -it --rm ${repo}:${tag}
-            ;;
-    *     )
-            usage
-            ;;
+        DOCKER_BUILDKIT=1 docker build --rm \
+          --progress=plain \
+          --no-cache \
+          --tag ${repo}:${tag} \
+          .
+        ;;
+    push )
+        docker push ${repo}:${tag}
+        ;;
+    test )
+        docker run -it --rm ${repo}:${tag}
+        ;;
+    * )
+        usage
+        ;;
 esac
 
 echo "[.] All Done"
