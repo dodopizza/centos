@@ -4,7 +4,7 @@
 # BUILD/PUSH/TEST IMAGE
 
 ```
-make <build|build-no-cache|push|test> <tag> [message]
+./make <build|build-no-cache|push|test> <tag> [message]
 ```
 
 # SUMMARY
