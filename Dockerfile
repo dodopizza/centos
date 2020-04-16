@@ -5,14 +5,14 @@ RUN apk -U add build-base git \
     && export LDFLAGS=-static \
     && make
 
-FROM centos:7.6.1810 AS redis_builder
+FROM centos:7.7.1908 AS redis_builder
 WORKDIR /workdir
 RUN yum install -y gcc make \
     && curl -L http://download.redis.io/redis-stable.tar.gz | tar -xz \
     && cd ./redis-stable \
     && make
 
-FROM centos:7.6.1810
+FROM centos:7.7.1908
 LABEL maintainer="Vitaly Uvarov <v.uvarov@dodopizza.com>"
 
 COPY --from=jsonnet_builder /workdir/jsonnet /usr/local/bin/
