@@ -24,6 +24,7 @@ stages:
 build:
   stage: build
   image: docker
+  resource_group: build-image
   extends:
     - .common/dind_service
   variables:
