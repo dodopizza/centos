@@ -155,11 +155,6 @@ Run default shell and mount current working directory:
 docker run -it --rm -w /workdir -v "$(PWD):/workdir" dodopizza/centos:TAG
 ```
 
-Run default shell and mount current working directory with dind (2.0.2+):
-```bash
-docker run -it --rm -w /workdir -v "$(PWD):/workdir" -v /var/run/docker.sock:/var/run/docker.sock dodopizza/centos:TAG
-```
-
 To login to dodo infrastructure just type:
 ```bash
 dodo-login
@@ -167,27 +162,26 @@ dodo-login
 
 To forward current service user onto the container (sftd required):
 ```bash
-docker run -it --rm \
-    -w /workdir -v "$(PWD):/workdir" \
-    -e "SFT_USER_ID=$(id -u)" \
-    -e "SFT_USER_NAME=$(id -un)" \
-    -v /var/run/sftd/management.sock:/var/run/sftd/management.sock \
-    dodopizza/centos:TAG
+...
+-e "SFT_USER_ID=$(id -u)" 
+-e "SFT_USER_NAME=$(id -un)" 
+-v /var/run/sftd/management.sock:/var/run/sftd/management.sock 
+...
 ```
 
 To use convenient command line function (dodo-centos), add following code to ~/.bashrc (bash) or ~/.zshrc (zsh)
 ```bash
-function dodo-centos() {
-  local version=2.0.8
-  local DRONE_SERVER=https://drone.dodois.ru
-  local DRONE_TOKEN="Your_drone_token"
-  docker run -it --rm \
-    -w /workdir \
-    -v "${PWD}:/workdir" \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    --env DRONE_SERVER=${DRONE_SERVER} \
-    --env DRONE_TOKEN=${DRONE_TOKEN} \
-    dodopizza/centos:$version
+function dodo-centos(){
+	local version=2.0.9
+	local DRONE_SERVER=https://drone.dodois.ru
+	local DRONE_TOKEN="Your_drone_token"
+	docker run -it --rm \
+		-w /workdir -v "${PWD}:/workdir" \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		-v ${HOME}/.kube:/root/.kube \
+		--env DRONE_SERVER=${DRONE_SERVER} \
+		--env DRONE_TOKEN=${DRONE_TOKEN} \
+		dodopizza/centos:${version}
 }
 ```
 
@@ -200,7 +194,7 @@ notepad.exe $profile
 and add following code
 ```powershell
 Function dodo-centos {
-  $version="2.0.8"
+  $version="2.0.9"
   $DRONE_SERVER="https://drone.dodois.ru"
   $DRONE_TOKEN="Your_drone_token"
   docker run -it --rm `
