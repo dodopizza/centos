@@ -17,7 +17,6 @@ stages:
     GIT_SSL_NO_VERIFY: "1"
   before_script:
     - docker info
-    - docker ps
   after_script:
     - docker images
 
