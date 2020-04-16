@@ -1,12 +1,10 @@
-![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/dodopizza/centos)
-![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/dodopizza/centos)
-
-[DockerHub](https://hub.docker.com/r/dodopizza/centos)
+* [DockerHub](https://hub.docker.com/r/dodopizza/centos)
+* [GitLab CI/CD](https://gitlab.com/dodopizza/infrastructure/centos/pipelines)
 
 # BUILD/PUSH/TEST IMAGE
 
 ```
-./docker.sh <build|build-no-cache|push|test> <tag> [message]
+make <build|build-no-cache|push|test> <tag> [message]
 ```
 
 # SUMMARY
@@ -20,7 +18,7 @@
 * pip 20.0.2 from /usr/local/lib/python3.6/site-packages/pip (python 3.6)
 * azure-cli 2.3.1
 * kubectl: Client Version: v1.18.1
-* ansible 2.9.1
+* ansible 2.9.6
 * ansible-lint 4.2.0
 * azcopy version 10.4.0
 * mysql  Ver 14.14 Distrib 5.7.29-32, for Linux (x86_64) using  6.2
@@ -42,6 +40,10 @@
 * promtool, version 2.16.0 (branch: HEAD, revision: b90be6f32a33c03163d700e1452b54454ddce0ec)
 
 # CHANGELOG
+
+## v2.0.9 (2020-04-17)
+* Based on centos:7.7.1908
+* ansible 2.9.6
 
 ## v2.0.8 (2020-04-14)
 * azure-cli 2.3.1
