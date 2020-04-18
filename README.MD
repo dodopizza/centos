@@ -7,17 +7,57 @@
 ./make <build|build-no-cache|push|test> <tag> [message]
 ```
 
+```documentation
+ttl: 30d
+tags:
+  - jq
+  - git
+  - jsonnet
+  - redis
+  - redis-cli
+  - python
+  - pip
+  - azure
+  - azure-cli
+  - kubectl
+  - ansible
+  - ansible-lint
+  - azcopy
+  - mysql
+  - mysqldump
+  - mysqlpump
+  - xtrabackup
+  - pt-online-schema-change
+  - ghost
+  - gh-ost
+  - innotop
+  - Terraform
+  - packer
+  - drone
+  - sft
+  - az-mysqlpump
+  - Docker
+  - docker-compose
+  - helm
+  - werf
+  - promtool
+indexes:
+  - Инфраструктура/Centos/Docker centos
+  - Инфраструктура/Linux/Docker/Centos
+  - Инфраструктура/Docker/dodo-centos
+```
+
 # SUMMARY
 * jq-1.6
 * git version 1.8.3.1
 * Jsonnet commandline interpreter v0.15.0
-* redis-cli 5.0.8
+* redis-cli 5.0.9
 * Python 2.7.5
 * Python 3.6.8
 * pip 20.0.2 from /usr/lib/python2.7/site-packages/pip (python 2.7)
 * pip 20.0.2 from /usr/local/lib/python3.6/site-packages/pip (python 3.6)
 * azure-cli 2.3.1
-* kubectl: Client Version: v1.18.1
+* kubectl: Client Version: v1.18.2
 * ansible 2.9.6
 * ansible-lint 4.2.0
 * azcopy version 10.4.0
@@ -36,14 +76,18 @@
 * Docker version 1.13.1, build cccb291/1.13.1
 * docker-compose version 1.25.5, build unknown
 * helm: Client: v2.11.0+g2e55dbe
-* werf: v1.1.8
-* promtool, version 2.16.0 (branch: HEAD, revision: b90be6f32a33c03163d700e1452b54454ddce0ec)
+* werf: v1.1.9+fix5
+* promtool, version 2.17.1 (branch: HEAD, revision: ae041f97cfc6f43494bed65ec4ea4e3a0cf2ac69)
 
 # CHANGELOG
 
 ## v2.0.9 (2020-04-17)
 * Based on centos:7.7.1908
 * ansible 2.9.6
+* redis-cli 5.0.9
+* kubectl: Client Version: v1.18.2
+* werf: v1.1.9+fix5
+* promtool, version 2.17.1 (branch: HEAD, revision: ae041f97cfc6f43494bed65ec4ea4e3a0cf2ac69)
 
 ## v2.0.8 (2020-04-14)
 * azure-cli 2.3.1
