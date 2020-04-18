@@ -110,7 +110,7 @@ RUN cd /tmp/ \
 ## werf
 ## https://github.com/flant/werf/releases
 RUN werf_version=1.1.9+fix5 \
-    && curl -L https://dl.bintray.com/flant/werf/v1.1.8/werf-linux-amd64-v${werf_version} -o /tmp/werf \
+    && curl -L https://dl.bintray.com/flant/werf/v${werf_version}/werf-linux-amd64-v${werf_version} -o /tmp/werf \
     && chmod +x /tmp/werf \
     && mv /tmp/werf /usr/local/bin/werf
 
