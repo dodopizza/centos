@@ -39,10 +39,12 @@ build:
         DOCKER_BUILDKIT=1 docker build \
           --progress=plain \
           --build-arg BUILDKIT_INLINE_CACHE=1 \
-          --cache-from $CI_REGISTRY_IMAGE:$IMAGE_TAG \
+          --cache-from $CI_REGISTRY_IMAGE:latest-cache \
+          --tag $CI_REGISTRY_IMAGE:latest-cache \
           --tag $CI_REGISTRY_IMAGE:$IMAGE_TAG \
           --tag $DOCKERHUB_REGISTRY_IMAGE:$IMAGE_TAG \
           .
 
+        docker push $CI_REGISTRY_IMAGE:latest-cache
         docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG
         docker push $DOCKERHUB_REGISTRY_IMAGE:$IMAGE_TAG
