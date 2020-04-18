@@ -83,7 +83,9 @@ RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docke
 ## docker-compose for dind
 RUN pip install docker-compose
 
-# packer (hashicorp-packer) issue: https://github.com/cracklib/cracklib/issues/7
+## packer (hashicorp-packer) 
+## https://github.com/hashicorp/packer/releases
+## issue: https://github.com/cracklib/cracklib/issues/7
 RUN packer_version=1.5.5 \
     && curl -o /tmp/packer.zip https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_linux_amd64.zip \
     && unzip /tmp/packer.zip -d /tmp/ \
@@ -106,14 +108,16 @@ RUN cd /tmp/ \
     && rm -rf linux-amd64
 
 ## werf
-RUN werf_version=1.1.8 \
+## https://github.com/flant/werf/releases
+RUN werf_version=1.1.9+fix5 \
     && curl -L https://dl.bintray.com/flant/werf/v1.1.8/werf-linux-amd64-v${werf_version} -o /tmp/werf \
     && chmod +x /tmp/werf \
     && mv /tmp/werf /usr/local/bin/werf
 
 ## promtool from prometheus
+## https://github.com/prometheus/prometheus/releases
 RUN cd /tmp/ \
-    && prometheus_version=2.16.0 \
+    && prometheus_version=2.17.1 \
     && curl -L https://github.com/prometheus/prometheus/releases/download/v${prometheus_version}/prometheus-${prometheus_version}.linux-amd64.tar.gz | tar zx \
     && cp -f prometheus-${prometheus_version}.linux-amd64/promtool /usr/bin/ \
     && rm -rf prometheus-${prometheus_version}.linux-amd64
