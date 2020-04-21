@@ -213,6 +213,8 @@ To forward current service user onto the container (sftd required):
 ...
 ```
 
+## Usage for Lnux/MaxOS X
+
 To use convenient command line function (dodo-centos), add following code to ~/.bashrc (bash) or ~/.zshrc (zsh)
 ```bash
 function dodo-centos(){
@@ -220,7 +222,8 @@ function dodo-centos(){
 	local DRONE_SERVER=https://drone.dodois.ru
 	local DRONE_TOKEN="Your_drone_token"
 	docker run -it --rm \
-		-w /workdir -v "${PWD}:/workdir" \
+		-w /workdir \
+		-v "${PWD}:/workdir" \
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		-v ${HOME}/.kube:/root/.kube \
 		--env DRONE_SERVER=${DRONE_SERVER} \
@@ -228,6 +231,8 @@ function dodo-centos(){
 		dodopizza/centos:${version}
 }
 ```
+
+## Usage for Windows
 
 To use convenient command line function (dodo-centos) for Windows, open pwsh profile with command
 ```powershell
@@ -246,6 +251,7 @@ Function dodo-centos {
     -w /workdir `
     -v "${PWD}:/workdir" `
     -v //var/run/docker.sock:/var/run/docker.sock `
+    -v ${HOME}/.kube:/root/.kube `
     --env DRONE_SERVER=$DRONE_SERVER `
     --env DRONE_TOKEN=$DRONE_TOKEN `
     dodopizza/centos:$version
