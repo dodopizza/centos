@@ -207,11 +207,13 @@ dodo-login
 To forward current service user onto the container (sftd required):
 ```bash
 ...
--e "SFT_USER_ID=$(id -u)" 
--e "SFT_USER_NAME=$(id -un)" 
--v /var/run/sftd/management.sock:/var/run/sftd/management.sock 
+-e "SFT_USER_ID=$(id -u)"
+-e "SFT_USER_NAME=$(id -un)"
+-v /var/run/sftd/management.sock:/var/run/sftd/management.sock
 ...
 ```
+
+## Usage for Linux/OS X
 
 To use convenient command line function (dodo-centos), add following code to ~/.bashrc (bash) or ~/.zshrc (zsh)
 ```bash
@@ -229,6 +231,8 @@ function dodo-centos(){
 }
 ```
 
+## Usage for Windows
+
 To use convenient command line function (dodo-centos) for Windows, open pwsh profile with command
 ```powershell
 New-Item $profile -Type File -Force
@@ -243,9 +247,9 @@ Function dodo-centos {
   $DRONE_TOKEN="Your_drone_token"
   docker run -it --rm `
     --privileged `
-    -w /workdir `
-    -v "${PWD}:/workdir" `
+    -w /workdir -v "${PWD}:/workdir" `
     -v //var/run/docker.sock:/var/run/docker.sock `
+    -v ${HOME}/.kube:/root/.kube `
     --env DRONE_SERVER=$DRONE_SERVER `
     --env DRONE_TOKEN=$DRONE_TOKEN `
     dodopizza/centos:$version
