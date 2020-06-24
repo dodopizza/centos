@@ -9,7 +9,8 @@ FROM centos:7.7.1908 AS redis_builder
 WORKDIR /workdir
 RUN curl -L http://download.redis.io/redis-stable.tar.gz | tar -xz \
     && cd ./redis-stable \
-    && yum install -y centos-release-scl devtoolset-7 \
+    && yum install -y centos-release-scl \
+    && yum install -y devtoolset-7 \
     && scl enable devtoolset-7 make
 
 FROM centos:7.7.1908
