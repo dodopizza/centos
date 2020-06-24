@@ -99,7 +99,7 @@ indexes:
 * werf: v1.1.20+fix1
 * promtool, version 2.19.1 (branch: HEAD, revision: eba3fdcbf0d378b66600281903e3aab515732b39)
 
-## v2.0.9 (2020-04-17)
+## v2.1.1 (2020-04-17)
 * Based on centos:7.7.1908
 * ansible 2.9.6
 * redis-cli 5.0.9
@@ -236,7 +236,7 @@ To forward current service user onto the container (sftd required):
 To use convenient command line function (dodo-centos), add following code to ~/.bashrc (bash) or ~/.zshrc (zsh)
 ```bash
 function dodo-centos(){
-	local version=2.0.9
+	local version=2.1.1
 	local DRONE_SERVER=https://drone.dodois.ru
 	local DRONE_TOKEN="Your_drone_token"
 	docker run -it --rm \
@@ -260,7 +260,7 @@ notepad.exe $profile
 and add following code
 ```powershell
 Function dodo-centos {
-  $version="2.0.9"
+  $version="2.1.1"
   $DRONE_SERVER="https://drone.dodois.ru"
   $DRONE_TOKEN="Your_drone_token"
   docker run -it --rm `
