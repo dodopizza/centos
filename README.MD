@@ -50,36 +50,54 @@ indexes:
 # SUMMARY
 * jq-1.6
 * git version 1.8.3.1
-* Jsonnet commandline interpreter v0.15.0
-* redis-cli 5.0.9
+* Jsonnet commandline interpreter v0.16.0
+* redis-cli 6.0.5
 * Python 2.7.5
 * Python 3.6.8
-* pip 20.0.2 from /usr/lib/python2.7/site-packages/pip (python 2.7)
-* pip 20.0.2 from /usr/local/lib/python3.6/site-packages/pip (python 3.6)
-* azure-cli 2.3.1
-* kubectl: Client Version: v1.18.2
-* ansible 2.9.6
+* pip 20.1.1 from /usr/lib/python2.7/site-packages/pip (python 2.7)
+* pip 20.1.1 from /usr/local/lib/python3.6/site-packages/pip (python 3.6)
+* azure-cli 2.8.0
+* kubectl: Client Version: v1.18.4
+* ansible 2.9.10
 * ansible-lint 4.2.0
-* azcopy version 10.4.0
-* mysql  Ver 14.14 Distrib 5.7.29-32, for Linux (x86_64) using  6.2
-* mysqldump  Ver 10.13 Distrib 5.7.29-32, for Linux (x86_64)
-* mysqlpump  Ver 1.0.0 Distrib 5.7.29-32, for Linux (x86_64)
+* azcopy version 10.4.3
+* mysql  Ver 14.14 Distrib 5.7.30-33, for Linux (x86_64) using  6.2
+* mysqldump  Ver 10.13 Distrib 5.7.30-33, for Linux (x86_64)
+* mysqlpump  Ver 1.0.0 Distrib 5.7.30-33, for Linux (x86_64)
 * xtrabackup version 2.3.10 based on MySQL server 5.6.24 Linux (x86_64) (revision id: bd0d4403f36)
 * pt-online-schema-change 3.0.14-dev
 * gh-ost: 13b5f48ca5e7cc83bf7af2455785304c2c4385fb
 * innotop  Ver 1.12.0
-* Terraform v0.12.24
-* packer (hashicorp-packer): 1.5.5
+* Terraform v0.12.26
+* packer (hashicorp-packer): 1.6.0
 * drone version 1.2.1
-* sft version 1.44.4
+* sft version 1.45.3
 * az-mysqlpump  Ver 1.0.0 Distrib 5.7.24, for Linux (x86_64)
-* Docker version 1.13.1, build cccb291/1.13.1
-* docker-compose version 1.25.5, build unknown
+* Docker version 1.13.1, build 64e9980/1.13.1
+* docker-compose version 1.26.0, build unknown
 * helm: Client: v2.11.0+g2e55dbe
-* werf: v1.1.9+fix5
-* promtool, version 2.17.1 (branch: HEAD, revision: ae041f97cfc6f43494bed65ec4ea4e3a0cf2ac69)
+* werf: v1.1.20+fix1
+* promtool, version 2.19.1 (branch: HEAD, revision: eba3fdcbf0d378b66600281903e3aab515732b39)
 
 # CHANGELOG
+
+## v2.1.1 (2020-06-24)
+* Jsonnet commandline interpreter v0.16.0
+* redis-cli 6.0.5
+* azure-cli 2.8.0
+* kubectl: Client Version: v1.18.4
+* ansible 2.9.10
+* azcopy version 10.4.3
+* mysql  Ver 14.14 Distrib 5.7.30-33, for Linux (x86_64) using  6.2
+* mysqldump  Ver 10.13 Distrib 5.7.30-33, for Linux (x86_64)
+* mysqlpump  Ver 1.0.0 Distrib 5.7.30-33, for Linux (x86_64)
+* Terraform v0.12.26
+* packer (hashicorp-packer): 1.6.0
+* sft version 1.45.3
+* Docker version 1.13.1, build 64e9980/1.13.1
+* docker-compose version 1.26.0, build unknown
+* werf: v1.1.20+fix1
+* promtool, version 2.19.1 (branch: HEAD, revision: eba3fdcbf0d378b66600281903e3aab515732b39)
 
 ## v2.0.9 (2020-04-17)
 * Based on centos:7.7.1908
