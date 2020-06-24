@@ -51,7 +51,7 @@ RUN az aks install-cli
 
 ## ansible
 RUN pip --no-cache-dir install \
-    'ansible==2.9.6' \
+    'ansible==2.9.10' \
     'ansible-lint' \
     'pywinrm>=0.3.0' \
     'requests-ntlm'
@@ -87,7 +87,7 @@ RUN pip install docker-compose
 ## packer (hashicorp-packer) 
 ## https://github.com/hashicorp/packer/releases
 ## issue: https://github.com/cracklib/cracklib/issues/7
-RUN packer_version=1.5.5 \
+RUN packer_version=1.6.0 \
     && curl -o /tmp/packer.zip https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_linux_amd64.zip \
     && unzip /tmp/packer.zip -d /tmp/ \
     && mv -f /tmp/packer /usr/bin/hashicorp-packer \
@@ -110,7 +110,7 @@ RUN cd /tmp/ \
 
 ## werf
 ## https://github.com/flant/werf/releases
-RUN werf_version=1.1.9+fix5 \
+RUN werf_version=1.1.20+fix1 \
     && curl -L https://dl.bintray.com/flant/werf/v${werf_version}/werf-linux-amd64-v${werf_version} -o /tmp/werf \
     && chmod +x /tmp/werf \
     && mv /tmp/werf /usr/local/bin/werf
@@ -118,13 +118,13 @@ RUN werf_version=1.1.9+fix5 \
 ## promtool from prometheus
 ## https://github.com/prometheus/prometheus/releases
 RUN cd /tmp/ \
-    && prometheus_version=2.17.1 \
+    && prometheus_version=2.19.1 \
     && curl -L https://github.com/prometheus/prometheus/releases/download/v${prometheus_version}/prometheus-${prometheus_version}.linux-amd64.tar.gz | tar zx \
     && cp -f prometheus-${prometheus_version}.linux-amd64/promtool /usr/bin/ \
     && rm -rf prometheus-${prometheus_version}.linux-amd64
 
 ## terraform
-RUN terraform_version=0.12.24 \
+RUN terraform_version=0.12.26 \
     && curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
