@@ -7,10 +7,10 @@ RUN apk -U add build-base git \
 
 FROM centos:7.7.1908 AS redis_builder
 WORKDIR /workdir
-RUN yum install -y gcc make \
-    && curl -L http://download.redis.io/redis-stable.tar.gz | tar -xz \
+RUN curl -L http://download.redis.io/redis-stable.tar.gz | tar -xz \
     && cd ./redis-stable \
-    && make
+    && yum install -y centos-release-scl devtoolset-7 \
+    && scl enable devtoolset-7 make
 
 FROM centos:7.7.1908
 LABEL maintainer="Vitaly Uvarov <v.uvarov@dodopizza.com>"
