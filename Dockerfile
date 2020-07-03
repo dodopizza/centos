@@ -77,8 +77,12 @@ RUN drone_version=1.2.1 \
 COPY bin/az-mysqlpump /usr/local/bin/
 
 ## docker-client for dind
-RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
+RUN yum-config-manager \
+    --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
     && yum install -y docker-client \
+    && yum-config-manager --disable docker-ce \
+    && rm -rf /var/cache/yum/* \
+    && rm -f /etc/yum.repos.d/docker-ce.repo \
     && yum clean all
 
 ## docker-compose for dind
