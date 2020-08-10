@@ -21,7 +21,7 @@ COPY --from=jsonnet_builder /workdir/jsonnetfmt /usr/local/bin/
 COPY --from=redis_builder /workdir/redis-stable/src/redis-cli /usr/local/bin/
 
 RUN yum install -y epel-release \
-    && yum install -y python36 jq unzip git \
+    && yum install -y python36 jq unzip git strace htop \
     && yum clean all \
     && alternatives --install /usr/bin/python python /usr/bin/python2.7 50 \
     && alternatives --install /usr/bin/python python /usr/bin/python3.6 60 \
@@ -77,8 +77,12 @@ RUN drone_version=1.2.1 \
 COPY bin/az-mysqlpump /usr/local/bin/
 
 ## docker-client for dind
-RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
+RUN yum-config-manager \
+    --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
     && yum install -y docker-client \
+    && yum-config-manager --disable docker-ce \
+    && rm -rf /var/cache/yum/* \
+    && rm -f /etc/yum.repos.d/docker-ce.repo \
     && yum clean all
 
 ## docker-compose for dind
