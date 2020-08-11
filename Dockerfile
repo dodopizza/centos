@@ -14,6 +14,7 @@ RUN curl -L http://download.redis.io/redis-stable.tar.gz | tar -xz \
     && scl enable devtoolset-7 make
 
 FROM centos:7.7.1908
+
 LABEL maintainer="Vitaly Uvarov <v.uvarov@dodopizza.com>"
 LABEL version_prefix=2.1
 
@@ -52,7 +53,7 @@ RUN az aks install-cli
 
 ## ansible
 RUN pip --no-cache-dir install \
-    'ansible==2.9.10' \
+    'ansible==2.9.11' \
     'ansible-lint' \
     'pywinrm>=0.3.0' \
     'requests-ntlm'
@@ -129,7 +130,7 @@ RUN cd /tmp/ \
     && rm -rf prometheus-${prometheus_version}.linux-amd64
 
 ## terraform
-RUN terraform_version=0.12.26 \
+RUN terraform_version=0.12.29 \
     && curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
@@ -152,38 +153,6 @@ CMD ["/bin/bash"]
 COPY scripts/bash-aliases.sh /
 RUN echo -e '\nsource /bash-aliases.sh' >> ~/.bashrc
 
-## ---------------------------------------------------------------------------
-
-## VERSION INFO FOR CHANGELOG
-RUN echo '-------------------------------' \
-    && jq --version \
-    && git --version \
-    && jsonnet --version \
-    && redis-cli --version \
-    && python --version \
-    && python3.6 --version \
-    && pip2 --version \
-    && pip3 --version \
-    && ( az --version 2> /dev/null ) | head -n 1 \
-    && echo -n "kubectl: " && kubectl version --client=true --short=true \
-    && ansible --version | head -n 1 \
-    && ansible-lint --version \
-    && azcopy --version \
-    && mysql --version \
-    && mysqldump --version \
-    && mysqlpump --version \
-    && xtrabackup --version \
-    && pt-online-schema-change --version \
-    && echo -n "gh-ost: " && gh-ost --version \
-    && innotop --version \
-    && terraform --version \
-    && echo -n "packer (hashicorp-packer): " && hashicorp-packer --version \
-    && ( drone --version || true ) \
-    && sft --version \
-    && az-mysqlpump --version \
-    && docker --version \
-    && docker-compose --version \
-    && echo -n "helm: " && helm version --client --short \
-    && echo -n "werf: " && werf version \
-    && ( promtool --version 2>&1 | grep promtool ) \
-    && echo '-------------------------------'
+## version info for changelog
+COPY scripts/version-info.sh /
+RUN /version-info.sh
