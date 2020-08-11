@@ -1,0 +1,70 @@
+name: Build
+
+on: [ push ]
+
+jobs:
+  build:
+    name: Create image
+    runs-on: ubuntu-18.04
+    env:
+      centos_repo_main: dodopizza/centos
+      centos_repo_dev:  dodopizza/centos-dev
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set common vars
+        id: common_vars
+        run: |
+          version_prefix=$( cat ./Dockerfile | grep 'LABEL' | grep 'version_prefix=' | cut -d= -f2 )
+          version_suffix="${{ github.run_number }}"
+          
+          if [ -z "${version_prefix}" ]; then exit 1; fi
+
+          image_version="${version_prefix}.${version_suffix}"
+
+          echo "version_prefix: ${version_prefix}"
+          echo "::set-output name=version_prefix::${version_prefix}"
+          echo "image_version: ${image_version}"
+          echo "::set-output name=image_version::${image_version}"
+
+      - name: Build image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          push: true
+          repository: ${{ env.centos_repo_dev }}
+          cache_froms: ${{ env.centos_repo_dev }}:${{ steps.common_vars.outputs.version_prefix }}-latest
+          tags: ${{ steps.common_vars.outputs.version_prefix }}-latest,${{ steps.common_vars.outputs.image_version }}
+
+      - name: Get apps version info
+        id: image_app_versions
+        run: |
+          function set-multiline-output(){
+            local output_key=${1}
+            local output_val="${2}"
+            echo "${output_val}"
+            output_val="${output_val//'%'/'%25'}"
+            output_val="${output_val//$'\n'/'%0A'}"
+            output_val="${output_val//$'\r'/'%0D'}"
+            echo "::set-output name=${output_key}::${output_val}"
+          }
+          apps_version_info=$( docker run --rm ${centos_repo_dev}:${{ steps.common_vars.outputs.image_version }} bash -c '/version-info.sh' )
+          set-multiline-output apps_version_info \
+          "**Draft image** (!Remove this line before release): ${centos_repo_dev}:${{ steps.common_vars.outputs.image_version }}
+          **Utils preinstalled:**
+          ${apps_version_info}"
+
+      - name: Create draft release
+        uses: actions/create-release@v1
+        if: github.ref == 'refs/heads/latest'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.common_vars.outputs.image_version }}
+          release_name: ${{ env.centos_repo_main }}:${{ steps.common_vars.outputs.image_version }}
+          draft: true
+          prerelease: false
+          body: ${{ steps.image_app_versions.outputs.apps_version_info }}

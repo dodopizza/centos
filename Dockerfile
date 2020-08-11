@@ -15,6 +15,7 @@ RUN curl -L http://download.redis.io/redis-stable.tar.gz | tar -xz \
 
 FROM centos:7.7.1908
 LABEL maintainer="Vitaly Uvarov <v.uvarov@dodopizza.com>"
+LABEL version_prefix=2.1
 
 COPY --from=jsonnet_builder /workdir/jsonnet /usr/local/bin/
 COPY --from=jsonnet_builder /workdir/jsonnetfmt /usr/local/bin/

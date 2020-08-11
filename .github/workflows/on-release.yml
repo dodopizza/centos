@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Release
+    runs-on: ubuntu-18.04
+    env:
+      centos_repo_main: dodopizza/centos
+      centos_repo_dev:  dodopizza/centos-dev
+    steps:
+
+      - name: Set common vars
+        id: common_vars
+        # Ex:
+        #   refs/tags/0.1.12345 -> 0.1.12345
+        run: |
+          image_version=$( echo ${{ github.ref }} | sed -n 's/refs\/tags\/\(.*\)/\1/p' )
+          version_prefix=$( echo ${image_version} | awk -F \. {'print $1"."$2'} )
+          major_version=$(  echo ${image_version} | awk -F \. {'print $1'} )
+
+          if [ -z "${image_version}" ]; then exit 1; fi
+
+          echo "image_version: ${image_version}"
+          echo "::set-output name=image_version::${image_version}"
+
+          echo "version_prefix: ${version_prefix}"
+          echo "::set-output name=version_prefix::${version_prefix}"
+
+          echo "major_version: ${major_version}"
+          echo "::set-output name=major_version::${major_version}"
+
+      - name: Retag dev image and push to main repo
+        run: |
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username=${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          dev_image=${centos_repo_dev}:${{ steps.common_vars.outputs.image_version }}
+          docker pull ${dev_image}
+          for main_image in \
+            "${centos_repo_main}:${{ steps.common_vars.outputs.image_version }}"  \
+            "${centos_repo_main}:${{ steps.common_vars.outputs.version_prefix }}" \
+            "${centos_repo_main}:${{ steps.common_vars.outputs.major_version }}"  \
+            "${centos_repo_main}:latest"
+          do
+            docker tag  ${dev_image} ${main_image}
+            docker push ${main_image}
+          done
