@@ -130,7 +130,7 @@ RUN cd /tmp/ \
     && rm -rf prometheus-${prometheus_version}.linux-amd64
 
 ## terraform
-RUN terraform_version=0.12.29 \
+RUN terraform_version=0.13.0 \
     && curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
