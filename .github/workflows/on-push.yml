@@ -70,7 +70,8 @@ jobs:
             output_val="${output_val//$'\r'/'%0D'}"
             echo "::set-output name=${output_key}::${output_val}"
           }
-          apps_version_info=$( docker run --rm ${centos_repo_dev}:${{ steps.common_vars.outputs.image_version }} bash -c '/version-info.sh' )
+          dev_image=${centos_repo_dev}:sha-${GITHUB_SHA:0:7}
+          apps_version_info=$( docker run --rm ${dev_image} bash -c '/version-info.sh' )
           set-multiline-output apps_version_info \
           "**Draft image** (!Remove this line before release): ${centos_repo_dev}:sha-${GITHUB_SHA:0:7}
           **Utils preinstalled:**
