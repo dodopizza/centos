@@ -1,10 +1,19 @@
 name: Build
 
-on: [ push ]
+on:
+  pull_request:
+  push:
+    paths:
+      - 'scripts/**'
+      - 'bin/**'
+      - 'Dockerfile'
+    branches:    
+        - 'main'
+        - '*.*.*'
 
 jobs:
   build:
-    name: Create image
+    name: Build image
     runs-on: ubuntu-18.04
     env:
       centos_repo_main: dodopizza/centos
@@ -14,31 +23,31 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # - name: Build image and push to dodopizza/centos-dev:sha-*******
-      #   uses: docker/build-push-action@v1
-      #   with:
-      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
-      #     password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      #     push: true
-      #     repository: ${{ env.centos_repo_dev }}
-      #     tag_with_sha: true
-
-      - name: Build image and push to dodopizza/centos-dev:sha-*
+      - name: Login to hub.docker
         run: |
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username=${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          dev_image=${centos_repo_dev}:sha-${GITHUB_SHA:0:7}
+
+      - name: Build image and check preinstalled app versions
+        run: |
+          local_image=${centos_repo_dev}:local
           docker build --rm \
-            --tag ${dev_image} \
+            --tag ${local_image} \
             .
+          docker run --rm ${local_image} bash -c '/version-info.sh'
+
+      - name: Push to dodopizza/centos-dev:sha-*
+        run: |
+          local_image=${centos_repo_dev}:local
+          dev_image=${centos_repo_dev}:sha-${GITHUB_SHA:0:7}
+          docker tag  ${local_image} ${dev_image}
           docker push ${dev_image}
 
       - name: Push to dodopizza/centos:main
         if: github.ref == 'refs/heads/main'
         run: |
-          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username=${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          dev_image=${centos_repo_dev}:sha-${GITHUB_SHA:0:7}
+          local_image=${centos_repo_dev}:local
           main_image=${centos_repo_main}:main
-          docker tag  ${dev_image} ${main_image}
+          docker tag  ${local_image} ${main_image}
           docker push ${main_image}
 
       - name: Get image version prefix from dockerfile
@@ -57,7 +66,7 @@ jobs:
           echo "image_version: ${image_version}"
           echo "::set-output name=image_version::${image_version}"
 
-      - name: Get apps version info
+      - name: Get apps version and draft release messsage
         if: github.ref == 'refs/heads/main'
         id: image_app_versions
         run: |
