@@ -26,6 +26,7 @@ jobs:
       - name: Push to dodopizza/centos:main
         if: github.ref == 'refs/heads/main'
         run: |
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username=${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           dev_image=${centos_repo_dev}:sha-${GITHUB_SHA:0:7}
           main_image=${centos_repo_main}:main
           docker tag  ${dev_image} ${main_image}
