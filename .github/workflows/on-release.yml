@@ -36,7 +36,7 @@ jobs:
       - name: Retag dev image and push to main repo
         run: |
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username=${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          dev_image=${centos_repo_dev}:${{ steps.common_vars.outputs.image_version }}
+          dev_image=${centos_repo_dev}:sha-${GITHUB_SHA:0:7}
           docker pull ${dev_image}
           for main_image in \
             "${centos_repo_main}:${{ steps.common_vars.outputs.image_version }}"  \
