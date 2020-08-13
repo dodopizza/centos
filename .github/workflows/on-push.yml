@@ -14,14 +14,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build image and push to dodopizza/centos-dev:sha-*******
-        uses: docker/build-push-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          push: true
-          repository: ${{ env.centos_repo_dev }}
-          tag_with_sha: true
+      # - name: Build image and push to dodopizza/centos-dev:sha-*******
+      #   uses: docker/build-push-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      #     push: true
+      #     repository: ${{ env.centos_repo_dev }}
+      #     tag_with_sha: true
+
+      - name: Build image and push to dodopizza/centos-dev:sha-*
+        run: |
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username=${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          dev_image=${centos_repo_dev}:sha-${GITHUB_SHA:0:7}
+          docker build --rm \
+            --tag ${dev_image} \
+            .
+          docker push ${dev_image}
 
       - name: Push to dodopizza/centos:main
         if: github.ref == 'refs/heads/main'
