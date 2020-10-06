@@ -31,16 +31,7 @@ jobs:
           docker build --rm --tag centos_local .
           docker run --rm centos_local bash -c '/version-info.sh'
 
-      - name: Push to dodopizza/centos:latest
-        if: github.ref == 'refs/heads/latest'
-        run: |
-          docker tag  centos_local ${centos_repo_main}:latest
-          docker tag  centos_local ${centos_repo_dev}:latest
-          docker push ${centos_repo_main}:latest
-          docker push ${centos_repo_dev}:latest
-
-      - name: Push to dodopizza/centos-dev:branch_short_sha
-        if: github.ref != 'refs/heads/latest'
+      - name: Push to dodopizza/centos-dev:<branch_short_sha>
         run: |
           branch_short_sha=$( echo ${{ github.ref }} | sha1sum | cut -c1-6 )
           docker tag  centos_local ${centos_repo_dev}:${branch_short_sha}
@@ -49,3 +40,11 @@ jobs:
           echo
           echo "Dev image tag: ${centos_repo_dev}:${branch_short_sha}"
           echo
+
+      - name: Push to dodopizza/centos:latest and dodopizza/centos-dev:latest
+        if: github.ref == 'refs/heads/latest'
+        run: |
+          docker tag  centos_local ${centos_repo_main}:latest
+          docker tag  centos_local ${centos_repo_dev}:latest
+          docker push ${centos_repo_main}:latest
+          docker push ${centos_repo_dev}:latest
