@@ -15,24 +15,20 @@ jobs:
       centos_repo_dev:  dodopizza/centos-dev
     steps:
 
-      - name: Test
-        run: |
-          echo ${{ github.ref }}
-
       - name: Login to hub.docker
         run: |
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username=${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
       - name: Retag dev image and push to prepare release draft
         run: |
-          branch_name=$( echo ${{ github.ref }} | sed -n 's/refs\/heads\/\(.*\)/\1/p' )
-          docker pull ${centos_repo_dev}:${branch_name}
+          branch_short_sha=$( echo ${{ github.ref }} | sha1sum | cut -c1-6 )
+          docker pull ${centos_repo_dev}:${branch_short_sha}
           for image_tag in \
             "${centos_repo_main}:$( echo ${{ github.event.inputs.version_tag }} | cut -d . -f  1 )"  \
             "${centos_repo_main}:$( echo ${{ github.event.inputs.version_tag }} | cut -d . -f -2 )"  \
             "${centos_repo_main}:$( echo ${{ github.event.inputs.version_tag }} )"
           do
-            docker tag ${centos_repo_dev}:${branch_name} ${image_tag}
+            docker tag ${centos_repo_dev}:${branch_short_sha} ${image_tag}
             docker push ${image_tag}
           done
 
@@ -48,8 +44,8 @@ jobs:
             output_val="${output_val//$'\r'/'%0D'}"
             echo "::set-output name=${output_key}::${output_val}"
           }
-          branch_name=$( echo ${{ github.ref }} | sed -n 's/refs\/heads\/\(.*\)/\1/p' )
-          apps_version_info=$( docker run --rm ${centos_repo_dev}:${branch_name} bash -c '/version-info.sh' )
+          branch_short_sha=$( echo ${{ github.ref }} | sha1sum | cut -c1-6 )
+          apps_version_info=$( docker run --rm ${centos_repo_dev}:${branch_short_sha} bash -c '/version-info.sh' )
           set-multiline-output apps_version_info \
           "Image: ${centos_repo_main}:${{ github.event.inputs.version_tag }}
           **Utils preinstalled:**

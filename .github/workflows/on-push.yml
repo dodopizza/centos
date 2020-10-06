@@ -39,9 +39,13 @@ jobs:
           docker push ${centos_repo_main}:latest
           docker push ${centos_repo_dev}:latest
 
-      - name: Push to dodopizza/centos-dev:branch_name
+      - name: Push to dodopizza/centos-dev:branch_short_sha
         if: github.ref != 'refs/heads/latest'
         run: |
-          branch_name=$( echo ${{ github.ref }} | sed -n 's/refs\/tags\/\(.*\)/\1/p' )
-          docker tag  centos_local ${centos_repo_dev}:${branch_name}
-          docker push ${centos_repo_dev}:${branch_name}
+          branch_short_sha=$( echo ${{ github.ref }} | sha1sum | cut -c1-6 )
+          docker tag  centos_local ${centos_repo_dev}:${branch_short_sha}
+          docker push ${centos_repo_dev}:${branch_short_sha}
+
+          echo
+          echo "Dev image tag: ${centos_repo_dev}:${branch_short_sha}"
+          echo
