@@ -1,13 +1,9 @@
 ![Build](https://github.com/dodopizza/centos/workflows/Build/badge.svg?branch=latest&event=push)
 ![Create new release](https://github.com/dodopizza/centos/workflows/Create%20new%20release/badge.svg?event=workflow_dispatch)
 
-* [DockerHub](https://hub.docker.com/r/dodopizza/centos)
+* docker hub: [dodopizza/centos](https://hub.docker.com/r/dodopizza/centos)
+* docker hub dev: [dodopizza/centos-dev](https://hub.docker.com/r/dodopizza/centos-dev)
 
-# BUILD/PUSH/TEST IMAGE
-
-```
-./make <build|build-no-cache|push|test> <tag> [message]
-```
 
 ```documentation
 ttl: 30d
