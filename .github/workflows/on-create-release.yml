@@ -25,7 +25,7 @@ jobs:
 
       - name: Retag dev image and push to prepare release draft
         run: |
-          branch_name=$( echo ${{ github.ref }} | sed -n 's/refs\/tags\/\(.*\)/\1/p' )
+          branch_name=$( echo ${{ github.ref }} | sed -n 's/refs\/heads\/\(.*\)/\1/p' )
           docker pull ${centos_repo_dev}:${branch_name}
           for image_tag in \
             "${centos_repo_main}:$( echo ${{ github.event.inputs.version_tag }} | cut -d . -f  1 )"  \
@@ -48,7 +48,7 @@ jobs:
             output_val="${output_val//$'\r'/'%0D'}"
             echo "::set-output name=${output_key}::${output_val}"
           }
-          branch_name=$( echo ${{ github.ref }} | sed -n 's/refs\/tags\/\(.*\)/\1/p' )
+          branch_name=$( echo ${{ github.ref }} | sed -n 's/refs\/heads\/\(.*\)/\1/p' )
           apps_version_info=$( docker run --rm ${centos_repo_dev}:${branch_name} bash -c '/version-info.sh' )
           set-multiline-output apps_version_info \
           "Image: ${centos_repo_main}:${{ github.event.inputs.version_tag }}
