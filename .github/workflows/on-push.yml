@@ -3,10 +3,10 @@ name: Build
 on:
   pull_request:
   push:
-    # paths:
-    #   - 'scripts/**'
-    #   - 'bin/**'
-    #   - 'Dockerfile'
+    paths:
+      - 'scripts/**'
+      - 'bin/**'
+      - 'Dockerfile'
     branches:    
         - '*'
 
