@@ -1,0 +1,31 @@
+name: "Get image version from Dockerfile"
+description: "Get image version from Dockerfile"
+inputs:
+  dockerfile:
+    description: "Dockerfile fname"
+    default: ./Dockerfile
+    required: false
+outputs:
+  version_prefix:
+    value: ${{ steps.get_version.outputs.version_prefix }}
+    description: 'Version prefix'
+  version:
+    value: ${{ steps.get_version.outputs.version }}
+    description: 'Version'
+runs:
+  using: "composite"
+  steps: 
+    - id: get_version
+      shell: bash
+      run: |
+        version_prefix=$( cat "${{ inputs.dockerfile }}" | grep 'LABEL' | grep 'version_prefix=' | cut -d= -f2 )
+        version_suffix="${{ github.run_number }}"
+
+        if [ -z "${version_prefix}" ]; then exit 1; fi
+
+        version="${version_prefix}.${version_suffix}"
+
+        echo "version_prefix: ${version_prefix}"
+        echo "::set-output name=version_prefix::${version_prefix}"
+        echo "version: ${version}"
+        echo "::set-output name=version::${version}"

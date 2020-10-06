@@ -8,8 +8,7 @@ on:
       - 'bin/**'
       - 'Dockerfile'
     branches:    
-        - 'main'
-        - '*.*.*'
+        - '*'
 
 jobs:
   build:
@@ -29,71 +28,18 @@ jobs:
 
       - name: Build image and check preinstalled app versions
         run: |
-          local_image=${centos_repo_dev}:local
-          docker build --rm \
-            --tag ${local_image} \
-            .
-          docker run --rm ${local_image} bash -c '/version-info.sh'
+          docker build --rm --tag centos_local .
+          docker run --rm centos_local bash -c '/version-info.sh'
 
-      - name: Push to dodopizza/centos-dev:sha-*
+      - name: Push to dodopizza/centos:latest
+        if: github.ref == 'refs/heads/latest'
         run: |
-          local_image=${centos_repo_dev}:local
-          dev_image=${centos_repo_dev}:sha-${GITHUB_SHA:0:7}
-          docker tag  ${local_image} ${dev_image}
-          docker push ${dev_image}
+          docker tag  centos_local ${centos_repo_main}:latest
+          docker push ${centos_repo_main}:latest
 
-      - name: Push to dodopizza/centos:main
-        if: github.ref == 'refs/heads/main'
+      - name: Push to dodopizza/centos-dev:branch_name
+        if: github.ref != 'refs/heads/latest'
         run: |
-          local_image=${centos_repo_dev}:local
-          main_image=${centos_repo_main}:main
-          docker tag  ${local_image} ${main_image}
-          docker push ${main_image}
-
-      - name: Get image version prefix from dockerfile
-        if: github.ref == 'refs/heads/main'
-        id: common_vars
-        run: |
-          version_prefix=$( cat ./Dockerfile | grep 'LABEL' | grep 'version_prefix=' | cut -d= -f2 )
-          version_suffix="${{ github.run_number }}"
-          
-          if [ -z "${version_prefix}" ]; then exit 1; fi
-
-          image_version="${version_prefix}.${version_suffix}"
-
-          echo "version_prefix: ${version_prefix}"
-          echo "::set-output name=version_prefix::${version_prefix}"
-          echo "image_version: ${image_version}"
-          echo "::set-output name=image_version::${image_version}"
-
-      - name: Get apps version and draft release messsage
-        if: github.ref == 'refs/heads/main'
-        id: image_app_versions
-        run: |
-          function set-multiline-output(){
-            local output_key=${1}
-            local output_val="${2}"
-            echo "${output_val}"
-            output_val="${output_val//'%'/'%25'}"
-            output_val="${output_val//$'\n'/'%0A'}"
-            output_val="${output_val//$'\r'/'%0D'}"
-            echo "::set-output name=${output_key}::${output_val}"
-          }
-          dev_image=${centos_repo_dev}:sha-${GITHUB_SHA:0:7}
-          apps_version_info=$( docker run --rm ${dev_image} bash -c '/version-info.sh' )
-          set-multiline-output apps_version_info \
-          "**Draft image** (!Remove this line before release): ${centos_repo_dev}:sha-${GITHUB_SHA:0:7}
-          **Utils preinstalled:**
-          ${apps_version_info}"
-
-      - name: Create draft release
-        if: github.ref == 'refs/heads/main'
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.common_vars.outputs.image_version }}
-          release_name: ${{ env.centos_repo_main }}:${{ steps.common_vars.outputs.image_version }}
-          draft: true
-          prerelease: false
-          body: ${{ steps.image_app_versions.outputs.apps_version_info }}
+          branch_name=$( echo ${{ github.ref }} | sed -n 's/refs\/tags\/\(.*\)/\1/p' )
+          docker tag  centos_local ${centos_repo_dev}:${branch_name}
+          docker push ${centos_repo_dev}:${branch_name}
