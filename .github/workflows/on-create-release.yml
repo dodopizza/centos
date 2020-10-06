@@ -15,6 +15,10 @@ jobs:
       centos_repo_dev:  dodopizza/centos-dev
     steps:
 
+      - name: Test
+        run: |
+          echo ${{ github.ref }}
+
       - name: Login to hub.docker
         run: |
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username=${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
