@@ -27,7 +27,8 @@ RUN dnf install -y epel-release \
     && dnf clean all \
     && alternatives --set python /usr/bin/python3 \
     && curl https://bootstrap.pypa.io/get-pip.py | python \
-    && pip install --upgrade pip
+    && pip install --upgrade pip \
+    && pip install 'yq'
 
 ## expect && pexpect
 RUN dnf install -y expect \
