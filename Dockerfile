@@ -52,7 +52,7 @@ RUN az aks install-cli
 
 ## ansible
 RUN pip --no-cache-dir install \
-    'ansible==2.9.11' \
+    'ansible==2.10.0' \
     'ansible-lint' \
     'pywinrm>=0.3.0' \
     'requests-ntlm'
@@ -67,12 +67,6 @@ RUN yum install -y https://repo.percona.com/yum/percona-release-latest.noarch.rp
     && yum list | grep percona \
     && yum install -y Percona-Server-client-57 percona-xtrabackup percona-toolkit innotop \
     && yum clean all
-
-## drone ci
-RUN drone_version=1.2.1 \
-    && curl -L https://github.com/drone/drone-cli/releases/download/v${drone_version}/drone_linux_amd64.tar.gz | tar zx \
-    && chmod +x ./drone \
-    && mv ./drone /usr/bin/
 
 ## azure mysqlpump binary (5.6 issue)
 COPY bin/az-mysqlpump /usr/local/bin/
@@ -115,7 +109,7 @@ RUN cd /tmp/ \
 
 ## werf
 ## https://github.com/flant/werf/releases
-RUN werf_version=1.1.20+fix1 \
+RUN werf_version=1.1.22+fix27 \
     && curl -L https://dl.bintray.com/flant/werf/v${werf_version}/werf-linux-amd64-v${werf_version} -o /tmp/werf \
     && chmod +x /tmp/werf \
     && mv /tmp/werf /usr/local/bin/werf
@@ -123,13 +117,13 @@ RUN werf_version=1.1.20+fix1 \
 ## promtool from prometheus
 ## https://github.com/prometheus/prometheus/releases
 RUN cd /tmp/ \
-    && prometheus_version=2.19.1 \
+    && prometheus_version=2.21.0 \
     && curl -L https://github.com/prometheus/prometheus/releases/download/v${prometheus_version}/prometheus-${prometheus_version}.linux-amd64.tar.gz | tar zx \
     && cp -f prometheus-${prometheus_version}.linux-amd64/promtool /usr/bin/ \
     && rm -rf prometheus-${prometheus_version}.linux-amd64
 
 ## terraform
-RUN terraform_version=0.13.0 \
+RUN terraform_version=0.13.4 \
     && curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
