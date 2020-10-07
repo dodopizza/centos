@@ -22,7 +22,7 @@ COPY --from=jsonnet_builder /workdir/jsonnetfmt /usr/local/bin/
 COPY --from=redis_builder /workdir/redis-stable/src/redis-cli /usr/local/bin/
 
 RUN dnf install -y epel-release \
-    && dnf install -y python38 jq unzip git strace htop \
+    && dnf install -y python38 python38-devel jq unzip git strace htop \
     && dnf clean all \
     && alternatives --set python /usr/bin/python3 \
     && curl https://bootstrap.pypa.io/get-pip.py | python \
@@ -37,9 +37,10 @@ RUN dnf install -y expect \
 RUN    ( pip install 'ansible=='   || true ) \
     && ( pip install 'azure-cli==' || true )
 
-## azure-cli classic install on default python2
-RUN pip --no-cache-dir install \
-    'azure-cli==2.12.1'
+## azure-cli
+RUN dnf install -y gcc \
+    && pip --no-cache-dir install 'azure-cli==2.12.1' \
+    && dnf remove -y gcc
 
 ## azure kubernetes client
 RUN az aks install-cli
