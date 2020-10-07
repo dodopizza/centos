@@ -23,6 +23,7 @@ COPY --from=redis_builder /workdir/redis-stable/src/redis-cli /usr/local/bin/
 
 RUN dnf install -y epel-release \
     && dnf install -y python38 python38-devel jq unzip git strace htop \
+    && dnf install -y 'dnf-command(config-manager)' \
     && dnf clean all \
     && alternatives --set python /usr/bin/python3 \
     && curl https://bootstrap.pypa.io/get-pip.py | python \
@@ -70,7 +71,7 @@ COPY bin/az-mysqlpump /usr/local/bin/
 ## docker-client for dind
 RUN dnf config-manager \
     --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
-    && dnf install -y docker-client \
+    && dnf install -y docker-ce-cli \
     && dnf clean all
 
 ## docker-compose for dind
