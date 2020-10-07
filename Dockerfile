@@ -29,7 +29,8 @@ RUN yum install -y epel-release \
     && alternatives --set python /usr/bin/python2.7 \
     && curl https://bootstrap.pypa.io/get-pip.py | python2.7 \
     && curl https://bootstrap.pypa.io/get-pip.py | python3.6 \
-    && pip install --upgrade pip
+    && pip install --upgrade pip \
+    && pip install 'yq'
 
 ## expect && pexpect
 RUN yum install -y expect \
