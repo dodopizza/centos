@@ -97,6 +97,7 @@ This release method allow to develop more than one image version simultaneously,
 ttl: 30d
 tags:
   - jq
+  - yq
   - git
   - jsonnet
   - redis
@@ -119,7 +120,6 @@ tags:
   - innotop
   - Terraform
   - packer
-  - drone
   - sft
   - az-mysqlpump
   - Docker

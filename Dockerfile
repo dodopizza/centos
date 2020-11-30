@@ -13,7 +13,7 @@ RUN curl -L http://download.redis.io/redis-stable.tar.gz | tar -xz \
     && yum install -y devtoolset-7 \
     && scl enable devtoolset-7 make
 
-FROM centos:7.8.2003
+FROM centos:8
 
 LABEL maintainer="Vitaly Uvarov <v.uvarov@dodopizza.com>"
 
@@ -21,32 +21,28 @@ COPY --from=jsonnet_builder /workdir/jsonnet /usr/local/bin/
 COPY --from=jsonnet_builder /workdir/jsonnetfmt /usr/local/bin/
 COPY --from=redis_builder /workdir/redis-stable/src/redis-cli /usr/local/bin/
 
-RUN yum install -y epel-release \
-    && yum install -y python36 jq unzip git strace htop \
-    && yum clean all \
-    && alternatives --install /usr/bin/python python /usr/bin/python2.7 50 \
-    && alternatives --install /usr/bin/python python /usr/bin/python3.6 60 \
-    && alternatives --set python /usr/bin/python2.7 \
-    && curl https://bootstrap.pypa.io/get-pip.py | python2.7 \
-    && curl https://bootstrap.pypa.io/get-pip.py | python3.6 \
+RUN dnf install -y epel-release \
+    && dnf install -y python38 python38-devel jq unzip git strace htop \
+    && dnf install -y 'dnf-command(config-manager)' \
+    && dnf clean all \
+    && alternatives --set python /usr/bin/python3 \
+    && curl https://bootstrap.pypa.io/get-pip.py | python \
     && pip install --upgrade pip \
     && pip install 'yq'
 
 ## expect && pexpect
-RUN yum install -y expect \
-    && pip2 install pexpect==4.7.0 \
-    && pip3 install pexpect==4.7.0 \
-    && yum clean all
+RUN dnf install -y expect \
+    && pip install pexpect==4.7.0 \
+    && dnf clean all
 
 ## Debug available versions
-RUN (    pip install 'ansible==' || true ) \
+RUN    ( pip install 'ansible=='   || true ) \
     && ( pip install 'azure-cli==' || true )
 
-## azure-cli classic install on default python2
-RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc \
-    && echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.microsoft.com/yumrepos/azure-cli\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo \
-    && yum install -y azure-cli \
-    && yum clean all
+## azure-cli
+RUN dnf install -y gcc \
+    && pip --no-cache-dir install 'azure-cli==2.12.1' \
+    && dnf remove -y gcc
 
 ## azure kubernetes client
 RUN az aks install-cli
@@ -64,22 +60,20 @@ RUN cd /tmp/ \
     && mv -f /tmp/azcopy /usr/bin/
 
 ## mysql client + percona tools
-RUN yum install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm \
-    && yum list | grep percona \
-    && yum install -y Percona-Server-client-57 percona-xtrabackup percona-toolkit innotop \
-    && yum clean all
+RUN dnf install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm \
+    && dnf module disable -y mysql \
+    && percona-release setup ps57 \
+    && dnf install -y Percona-Server-server-57 Percona-Server-client-57 \
+    && dnf clean all
 
 ## azure mysqlpump binary (5.6 issue)
 COPY bin/az-mysqlpump /usr/local/bin/
 
 ## docker-client for dind
-RUN yum-config-manager \
+RUN dnf config-manager \
     --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
-    && yum install -y docker-client \
-    && yum-config-manager --disable docker-ce \
-    && rm -rf /var/cache/yum/* \
-    && rm -f /etc/yum.repos.d/docker-ce.repo \
-    && yum clean all
+    && dnf install -y docker-ce-cli \
+    && dnf clean all
 
 ## docker-compose for dind
 RUN pip install docker-compose
@@ -87,7 +81,7 @@ RUN pip install docker-compose
 ## packer (hashicorp-packer) 
 ## https://github.com/hashicorp/packer/releases
 ## issue: https://github.com/cracklib/cracklib/issues/7
-RUN packer_version=1.6.0 \
+RUN packer_version=1.6.4 \
     && curl -o /tmp/packer.zip https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_linux_amd64.zip \
     && unzip /tmp/packer.zip -d /tmp/ \
     && mv -f /tmp/packer /usr/bin/hashicorp-packer \
@@ -132,10 +126,10 @@ RUN terraform_version=0.13.4 \
 ## scaleft client
 RUN curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/scaleft.repo \
     && yes | rpm --import https://dist.scaleft.com/pki/scaleft_rpm_key.asc \
-    && yum install -y scaleft-client-tools.x86_64 \
-    && yum install -y openssh-clients sshpass \
-    && yum install -y sudo \
-    && yum clean all \
+    && dnf install -y scaleft-client-tools.x86_64 \
+    && dnf install -y openssh-clients sshpass \
+    && dnf install -y sudo \
+    && dnf clean all \
     && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config
 
 ## scaleft user forwarding from host machine to container
