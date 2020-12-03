@@ -60,11 +60,10 @@ RUN cd /tmp/ \
     && mv -f /tmp/azcopy /usr/bin/
 
 ## mysql client + percona tools
-RUN dnf install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm \
-    && dnf module disable -y mysql \
-    && percona-release setup ps57 \
-    && dnf install -y Percona-Server-server-57 Percona-Server-client-57 \
-    && dnf clean all
+RUN yum install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm \
+    && yum list | grep percona \
+    && yum install -y Percona-Server-client-57 percona-xtrabackup-24 percona-toolkit innotop \
+    && yum clean all
 
 ## azure mysqlpump binary (5.6 issue)
 COPY bin/az-mysqlpump /usr/local/bin/

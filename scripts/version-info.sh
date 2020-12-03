@@ -4,8 +4,6 @@ git --version
 jsonnet --version 
 redis-cli --version 
 python --version 
-python3.6 --version 
-pip2 --version 
 pip3 --version 
 ( az --version 2> /dev/null ) | head -n 1 
 echo -n "kubectl: " && kubectl version --client=true --short=true 
@@ -21,7 +19,6 @@ echo -n "gh-ost: " && gh-ost --version
 innotop --version 
 terraform --version 
 echo -n "packer (hashicorp-packer): " && hashicorp-packer --version 
-( drone --version || true ) 
 sft --version 
 az-mysqlpump --version 
 docker --version 
