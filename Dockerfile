@@ -28,7 +28,7 @@ RUN dnf install -y epel-release \
     && alternatives --set python /usr/bin/python3 \
     && curl https://bootstrap.pypa.io/get-pip.py | python \
     && pip install --upgrade pip \
-    && pip install 'yq'
+    && pip install yq
 
 ## expect && pexpect
 RUN dnf install -y expect \
@@ -49,7 +49,7 @@ RUN az aks install-cli
 
 ## ansible
 RUN pip --no-cache-dir install \
-    'ansible==2.10.0' \
+    'ansible==2.10.3' \
     'ansible-lint' \
     'pywinrm>=0.3.0' \
     'requests-ntlm'
@@ -60,10 +60,10 @@ RUN cd /tmp/ \
     && mv -f /tmp/azcopy /usr/bin/
 
 ## mysql client + percona tools
-RUN dnf install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm \
+RUN dnf install -y innotop \
+    && dnf install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm \
     && dnf module disable -y mysql \
-    && percona-release setup ps57 \
-    && dnf install -y Percona-Server-server-57 Percona-Server-client-57 \
+    && dnf install -y percona-toolkit Percona-Server-client-57 percona-xtrabackup-24 \
     && dnf clean all
 
 ## azure mysqlpump binary (5.6 issue)
@@ -81,7 +81,7 @@ RUN pip install docker-compose
 ## packer (hashicorp-packer) 
 ## https://github.com/hashicorp/packer/releases
 ## issue: https://github.com/cracklib/cracklib/issues/7
-RUN packer_version=1.6.4 \
+RUN packer_version=1.6.5 \
     && curl -o /tmp/packer.zip https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_linux_amd64.zip \
     && unzip /tmp/packer.zip -d /tmp/ \
     && mv -f /tmp/packer /usr/bin/hashicorp-packer \
@@ -104,7 +104,7 @@ RUN cd /tmp/ \
 
 ## werf
 ## https://github.com/flant/werf/releases
-RUN werf_version=1.1.22+fix27 \
+RUN werf_version=1.2.1+fix3 \
     && curl -L https://dl.bintray.com/flant/werf/v${werf_version}/werf-linux-amd64-v${werf_version} -o /tmp/werf \
     && chmod +x /tmp/werf \
     && mv /tmp/werf /usr/local/bin/werf
@@ -118,7 +118,8 @@ RUN cd /tmp/ \
     && rm -rf prometheus-${prometheus_version}.linux-amd64
 
 ## terraform
-RUN terraform_version=0.13.4 \
+## https://releases.hashicorp.com/terraform
+RUN terraform_version=0.13.5 \
     && curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
