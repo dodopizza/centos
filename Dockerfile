@@ -94,6 +94,10 @@ COPY bin/pt-online-schema-change-3.0.14-dev /usr/bin/pt-online-schema-change
 ## bin/gh-ost temporary patch
 COPY bin/gh-ost /usr/bin/gh-ost
 
+## ghost-tool from dodopizza/sre-toolchain
+COPY bin/ghost-tool.sh  /usr/bin/ghost-tool
+RUN  ln -s /usr/bin/ghost-tool /usr/bin/gh-ost-tool
+
 ## helm
 RUN cd /tmp/ \
     && helm_version=2.11.0 \
@@ -104,7 +108,7 @@ RUN cd /tmp/ \
 
 ## werf
 ## https://github.com/flant/werf/releases
-RUN werf_version=1.2.1+fix3 \
+RUN werf_version=1.2.2+fix4 \
     && curl -L https://dl.bintray.com/flant/werf/v${werf_version}/werf-linux-amd64-v${werf_version} -o /tmp/werf \
     && chmod +x /tmp/werf \
     && mv /tmp/werf /usr/local/bin/werf
