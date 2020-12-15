@@ -15,7 +15,7 @@ mysqldump --version
 mysqlpump --version 
 xtrabackup --version 
 pt-online-schema-change --version 
-echo -n "gh-ost: " && gh-ost --version 
+ghost-tool --version 
 innotop --version 
 terraform --version 
 echo -n "packer (hashicorp-packer): " && hashicorp-packer --version 
