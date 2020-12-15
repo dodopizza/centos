@@ -19,7 +19,7 @@ MYSQL_ALTER_STATEMENT='Alter statement'
 #
 
 SCRIPT_DIR=$(cd $(dirname $0); pwd) # without ending /
-VARS_FNAME=${SCRIPT_DIR}/ghost-tool.vars
+VARS_FNAME=$(pwd)/ghost-tool.vars
 GHOST_LOG_FNAME=/tmp/ghost.script.${MYSQL_TABLE}.log
 GHOST_POSTPONE_FNAME=/tmp/ghost.cutover.${MYSQL_TABLE}.flag
 
@@ -206,8 +206,8 @@ EOF
 
 # Usage: main::get_app_version_info
 function main::get_app_version_info(){
-    log 'gh-ost:     ' $(gh-ost --version)
-    log 'ghost-tool: ' 0.1.1
+    echo 'gh-ost:     ' $(gh-ost --version)
+    echo 'ghost-tool: ' 0.1.1
 }
 
 # Usage: main $@
