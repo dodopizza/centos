@@ -13,6 +13,14 @@ RUN curl -L http://download.redis.io/redis-stable.tar.gz | tar -xz \
     && yum install -y devtoolset-7 \
     && scl enable devtoolset-7 make
 
+FROM golang:1.15 AS ghost_builder
+RUN pwd \
+    && git clone https://github.com/github/gh-ost.git \
+    && cd gh-ost/ \
+    && git checkout 8ae02ef \
+    && ./script/cibuild \
+    && ls -l bin/
+
 FROM centos:8
 
 LABEL maintainer="Vitaly Uvarov <v.uvarov@dodopizza.com>"
@@ -20,6 +28,7 @@ LABEL maintainer="Vitaly Uvarov <v.uvarov@dodopizza.com>"
 COPY --from=jsonnet_builder /workdir/jsonnet /usr/local/bin/
 COPY --from=jsonnet_builder /workdir/jsonnetfmt /usr/local/bin/
 COPY --from=redis_builder /workdir/redis-stable/src/redis-cli /usr/local/bin/
+COPY --from=ghost_builder /go/gh-ost/bin/gh-ost /usr/local/bin/
 
 RUN dnf install -y epel-release \
     && dnf install -y python38 python38-devel jq unzip git strace htop \
@@ -69,6 +78,10 @@ RUN dnf install -y innotop \
 ## azure mysqlpump binary (5.6 issue)
 COPY bin/az-mysqlpump /usr/local/bin/
 
+## bin/pt-online-schema-change temporary patch
+RUN pt-online-schema-change --version || true
+COPY bin/pt-online-schema-change-3.0.14-dev /usr/bin/pt-online-schema-change
+
 ## docker-client for dind
 RUN dnf config-manager \
     --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
@@ -86,17 +99,6 @@ RUN packer_version=1.6.5 \
     && unzip /tmp/packer.zip -d /tmp/ \
     && mv -f /tmp/packer /usr/bin/hashicorp-packer \
     && rm -f /tmp/packer.zip
-
-## bin/pt-online-schema-change temporary patch
-RUN pt-online-schema-change --version || true
-COPY bin/pt-online-schema-change-3.0.14-dev /usr/bin/pt-online-schema-change
-
-## bin/gh-ost temporary patch
-COPY bin/gh-ost /usr/bin/gh-ost
-
-## ghost-tool from dodopizza/sre-toolchain
-COPY bin/ghost-tool.sh  /usr/bin/ghost-tool
-RUN  ln -s /usr/bin/ghost-tool /usr/bin/gh-ost-tool
 
 ## helm
 RUN cd /tmp/ \
@@ -136,6 +138,10 @@ RUN curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/sc
     && dnf install -y sudo \
     && dnf clean all \
     && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config
+
+## ghost-tool from dodopizza/sre-toolchain
+COPY bin/ghost-tool.sh  /usr/bin/ghost-tool
+RUN  ln -s /usr/bin/ghost-tool /usr/bin/gh-ost-tool
 
 ## scaleft user forwarding from host machine to container
 COPY  scripts/docker-entrypoint.sh /
