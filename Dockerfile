@@ -31,7 +31,7 @@ COPY --from=redis_builder /workdir/redis-stable/src/redis-cli /usr/local/bin/
 COPY --from=ghost_builder /go/gh-ost/bin/gh-ost /usr/local/bin/
 
 RUN dnf install -y epel-release \
-    && dnf install -y python38 python38-devel jq unzip git strace htop \
+    && dnf install -y python38 python38-devel unzip git strace htop \
     && dnf install -y 'dnf-command(config-manager)' \
     && dnf clean all \
     && alternatives --set python /usr/bin/python3 \
