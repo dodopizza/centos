@@ -115,6 +115,7 @@ RUN werf_version=1.2.2+fix4 \
     && chmod +x /tmp/werf \
     && mv /tmp/werf /usr/local/bin/werf
 
+## jq
 ## https://stedolan.github.io/jq/download/
 RUN jq_version=1.6 \
     && curl -L https://github.com/stedolan/jq/releases/download/jq-${jq_version}/jq-linux64 -o /tmp/jq \
