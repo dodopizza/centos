@@ -31,7 +31,7 @@ COPY --from=redis_builder /workdir/redis-stable/src/redis-cli /usr/local/bin/
 COPY --from=ghost_builder /go/gh-ost/bin/gh-ost /usr/local/bin/
 
 RUN dnf install -y epel-release \
-    && dnf install -y python38 python38-devel jq unzip git strace htop \
+    && dnf install -y python38 python38-devel unzip git strace htop \
     && dnf install -y 'dnf-command(config-manager)' \
     && dnf clean all \
     && alternatives --set python /usr/bin/python3 \
@@ -91,7 +91,7 @@ RUN dnf config-manager \
 ## docker-compose for dind
 RUN pip install docker-compose
 
-## packer (hashicorp-packer) 
+## packer (hashicorp-packer)
 ## https://github.com/hashicorp/packer/releases
 ## issue: https://github.com/cracklib/cracklib/issues/7
 RUN packer_version=1.6.5 \
@@ -114,6 +114,14 @@ RUN werf_version=1.2.2+fix4 \
     && curl -L https://dl.bintray.com/flant/werf/v${werf_version}/werf-linux-amd64-v${werf_version} -o /tmp/werf \
     && chmod +x /tmp/werf \
     && mv /tmp/werf /usr/local/bin/werf
+
+## jq
+## https://stedolan.github.io/jq/download/
+RUN jq_version=1.6 \
+    && curl -L https://github.com/stedolan/jq/releases/download/jq-${jq_version}/jq-linux64 -o /tmp/jq \
+    && chmod +x /tmp/jq \
+    && mv /tmp/jq /usr/local/bin/jq
+
 
 ## promtool from prometheus
 ## https://github.com/prometheus/prometheus/releases
