@@ -14,10 +14,11 @@ RUN curl -L http://download.redis.io/redis-stable.tar.gz | tar -xz \
     && scl enable devtoolset-7 make
 
 FROM golang:1.15 AS ghost_builder
+# 2b5d5e0 - Fix ghost issue with binary primary key - https://github.com/github/gh-ost/pull/915
 RUN pwd \
     && git clone https://github.com/github/gh-ost.git \
     && cd gh-ost/ \
-    && git checkout 8ae02ef \
+    && git checkout 2b5d5e0 \
     && ./script/cibuild \
     && ls -l bin/
 
