@@ -18,7 +18,7 @@ FROM golang:1.15 AS ghost_builder
 RUN pwd \
     && git clone https://github.com/github/gh-ost.git \
     && cd gh-ost/ \
-    && git checkout 2b5d5e0 \
+    && git pull origin pull/915/head && git checkout 2b5d5e0 \
     && ./script/cibuild \
     && ls -l bin/
 
