@@ -26,3 +26,4 @@ docker-compose --version
 echo -n "helm: " && helm version --client --short 
 echo -n "werf: " && werf version 
 ( promtool --version 2>&1 | grep promtool ) 
+( amtool --version 2>&1 | head -n 1 )

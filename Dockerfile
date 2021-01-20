@@ -132,6 +132,14 @@ RUN cd /tmp/ \
     && cp -f prometheus-${prometheus_version}.linux-amd64/promtool /usr/bin/ \
     && rm -rf prometheus-${prometheus_version}.linux-amd64
 
+## amtool from alertmanager
+## https://github.com/prometheus/alertmanager/releases
+RUN cd /tmp/ \
+    && alertmanager_version=0.21.0 \
+    && curl -L https://github.com/prometheus/alertmanager/releases/download/v${alertmanager_version}/alertmanager-${alertmanager_version}.linux-amd64.tar.gz | tar zx \
+    && cp -f alertmanager-${alertmanager_version}.linux-amd64/amtool /usr/bin/ \
+    && rm -rf alertmanager-${alertmanager_version}.linux-amd64
+
 ## terraform
 ## https://releases.hashicorp.com/terraform
 RUN terraform_version=0.14.4 \
