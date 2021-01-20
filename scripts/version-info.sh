@@ -13,7 +13,7 @@ azcopy --version
 mysql --version 
 mysqldump --version 
 mysqlpump --version 
-xtrabackup --version 
+( xtrabackup --version 2>&1 | grep version )
 pt-online-schema-change --version 
 ghost-tool --version 
 innotop --version 
