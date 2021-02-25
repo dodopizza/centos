@@ -32,7 +32,7 @@ COPY --from=redis_builder /workdir/redis-stable/src/redis-cli /usr/local/bin/
 COPY --from=ghost_builder /go/gh-ost/bin/gh-ost /usr/local/bin/
 
 RUN dnf install -y epel-release \
-    && dnf install -y python38 python38-devel unzip git strace htop \
+    && dnf install -y python36 unzip git strace htop \
     && dnf install -y 'dnf-command(config-manager)' \
     && dnf clean all \
     && alternatives --set python /usr/bin/python3 \
@@ -59,7 +59,7 @@ RUN az aks install-cli
 
 ## ansible
 RUN pip --no-cache-dir install \
-    'ansible==2.10.3' \
+    'ansible==2.10.7' \
     'ansible-lint' \
     'pywinrm>=0.3.0' \
     'requests-ntlm'
