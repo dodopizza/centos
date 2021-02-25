@@ -16,6 +16,8 @@ RUN curl -L http://download.redis.io/redis-stable.tar.gz | tar -xz \
 FROM golang:1.15 AS ghost_builder
 # 2b5d5e0 - Fix ghost issue with binary primary key - https://github.com/github/gh-ost/pull/915
 RUN pwd \
+    && git config --global user.email "git@dodopizza.com" \
+    && git config --global user.name "DodoPizza" \
     && git clone https://github.com/github/gh-ost.git \
     && cd gh-ost/ \
     && git pull origin pull/915/head && git checkout 2b5d5e0 \
