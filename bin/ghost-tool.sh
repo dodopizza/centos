@@ -143,6 +143,7 @@ function ghost::run(){
       --panic-flag-file="/tmp/ghost.panic.${MYSQL_TABLE}.flag" \
       --initially-drop-ghost-table \
       --initially-drop-socket-file \
+      --initially-drop-old-table \
       $@
 }
 
@@ -207,7 +208,7 @@ EOF
 # Usage: main::get_app_version_info
 function main::get_app_version_info(){
     echo 'gh-ost:     ' $(gh-ost --version)
-    echo 'ghost-tool: ' 0.1.1
+    echo 'ghost-tool: ' 0.1.2
 }
 
 # Usage: main $@
