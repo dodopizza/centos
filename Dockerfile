@@ -144,7 +144,7 @@ RUN cd /tmp/ \
 
 ## terraform
 ## https://releases.hashicorp.com/terraform
-RUN terraform_version=0.14.4 \
+RUN terraform_version=0.15.0 \
     && curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
