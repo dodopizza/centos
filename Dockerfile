@@ -129,7 +129,7 @@ RUN jq_version=1.6 \
 ## promtool from prometheus
 ## https://github.com/prometheus/prometheus/releases
 RUN cd /tmp/ \
-    && prometheus_version=2.21.0 \
+    && prometheus_version=2.26.0 \
     && curl -L https://github.com/prometheus/prometheus/releases/download/v${prometheus_version}/prometheus-${prometheus_version}.linux-amd64.tar.gz | tar zx \
     && cp -f prometheus-${prometheus_version}.linux-amd64/promtool /usr/bin/ \
     && rm -rf prometheus-${prometheus_version}.linux-amd64
