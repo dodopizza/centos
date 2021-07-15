@@ -113,7 +113,7 @@ RUN cd /tmp/ \
 
 ## werf
 ## https://github.com/flant/werf/releases
-RUN werf_version=1.2.2+fix4 \
+RUN werf_version=1.2.11+fix14 \
     && curl -L https://dl.bintray.com/flant/werf/v${werf_version}/werf-linux-amd64-v${werf_version} -o /tmp/werf \
     && chmod +x /tmp/werf \
     && mv /tmp/werf /usr/local/bin/werf
@@ -144,7 +144,7 @@ RUN cd /tmp/ \
 
 ## terraform
 ## https://releases.hashicorp.com/terraform
-RUN terraform_version=0.15.0 \
+RUN terraform_version=1.0.2 \
     && curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
