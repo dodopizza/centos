@@ -51,7 +51,7 @@ function dodo-centos(){
 }
 ```
 
-You may add next alias, to run dodo-centos as pod at Kubernetes cluster.
+To run dodo-centos as a pod in Kubernetes cluster add next code:
 
 ```bash
 function dodo-centos-k8s(){
