@@ -97,7 +97,7 @@ RUN pip install docker-compose
 ## packer (hashicorp-packer)
 ## https://github.com/hashicorp/packer/releases
 ## issue: https://github.com/cracklib/cracklib/issues/7
-RUN packer_version=1.6.5 \
+RUN packer_version=1.7.8 \
     && curl -o /tmp/packer.zip https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_linux_amd64.zip \
     && unzip /tmp/packer.zip -d /tmp/ \
     && mv -f /tmp/packer /usr/bin/hashicorp-packer \
@@ -113,8 +113,8 @@ RUN cd /tmp/ \
 
 ## werf
 ## https://github.com/flant/werf/releases
-RUN werf_version=1.2.11+fix14 \
-    && curl -L https://dl.bintray.com/flant/werf/v${werf_version}/werf-linux-amd64-v${werf_version} -o /tmp/werf \
+RUN werf_version=1.2.36 \
+    && curl -L "https://tuf.werf.io/targets/releases/${werf_version}/linux-amd64/bin/werf" -o /tmp/werf \
     && chmod +x /tmp/werf \
     && mv /tmp/werf /usr/local/bin/werf
 
@@ -129,7 +129,7 @@ RUN jq_version=1.6 \
 ## promtool from prometheus
 ## https://github.com/prometheus/prometheus/releases
 RUN cd /tmp/ \
-    && prometheus_version=2.26.0 \
+    && prometheus_version=2.30.3 \
     && curl -L https://github.com/prometheus/prometheus/releases/download/v${prometheus_version}/prometheus-${prometheus_version}.linux-amd64.tar.gz | tar zx \
     && cp -f prometheus-${prometheus_version}.linux-amd64/promtool /usr/bin/ \
     && rm -rf prometheus-${prometheus_version}.linux-amd64
@@ -144,7 +144,7 @@ RUN cd /tmp/ \
 
 ## terraform
 ## https://releases.hashicorp.com/terraform
-RUN terraform_version=1.0.2 \
+RUN terraform_version=1.0.10 \
     && curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
