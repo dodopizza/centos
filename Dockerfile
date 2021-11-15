@@ -81,6 +81,11 @@ RUN dnf install -y innotop \
 ## azure mysqlpump binary (5.6 issue)
 COPY bin/az-mysqlpump /usr/local/bin/
 
+## mydumper
+RUN dnf install -y \
+    https://github.com/maxbube/mydumper/releases/download/v0.10.7-2/mydumper-0.10.7-2.el8.x86_64.rpm
+
+
 ## bin/pt-online-schema-change temporary patch
 RUN pt-online-schema-change --version || true
 COPY bin/pt-online-schema-change-3.0.14-dev /usr/bin/pt-online-schema-change

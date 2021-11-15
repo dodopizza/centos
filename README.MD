@@ -127,6 +127,7 @@ tags:
   - mysql
   - mysqldump
   - mysqlpump
+  - mydumper
   - xtrabackup
   - pt-online-schema-change
   - ghost
