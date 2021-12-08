@@ -85,11 +85,6 @@ COPY bin/az-mysqlpump /usr/local/bin/
 RUN dnf install -y \
     https://github.com/maxbube/mydumper/releases/download/v0.10.7-2/mydumper-0.10.7-2.el8.x86_64.rpm
 
-
-## bin/pt-online-schema-change temporary patch
-RUN pt-online-schema-change --version || true
-COPY bin/pt-online-schema-change-3.0.14-dev /usr/bin/pt-online-schema-change
-
 ## docker-client for dind
 RUN dnf config-manager \
     --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
