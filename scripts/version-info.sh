@@ -15,7 +15,6 @@ mysqldump --version
 mysqlpump --version
 mydumper --version
 (xtrabackup --version 2>&1 | grep version)
-pt-online-schema-change --version
 ghost-tool --version
 innotop --version
 terraform --version
