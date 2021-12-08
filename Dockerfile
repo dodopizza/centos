@@ -118,7 +118,7 @@ RUN cd /tmp/ \
 
 ## werf
 ## https://github.com/flant/werf/releases
-RUN werf_version=1.2.36 \
+RUN werf_version=1.1.23+fix50 \
     && curl -L "https://tuf.werf.io/targets/releases/${werf_version}/linux-amd64/bin/werf" -o /tmp/werf \
     && chmod +x /tmp/werf \
     && mv /tmp/werf /usr/local/bin/werf
