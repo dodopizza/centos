@@ -5,13 +5,14 @@ RUN apk -U add build-base git \
     && export LDFLAGS=-static \
     && make
 
-FROM centos:7.8.2003 AS redis_builder
-WORKDIR /workdir
-RUN curl -L http://download.redis.io/redis-stable.tar.gz | tar -xz \
-    && cd ./redis-stable \
-    && yum install -y centos-release-scl \
-    && yum install -y devtoolset-7 \
-    && scl enable devtoolset-7 make
+# Temporary disabled
+# FROM centos:7.8.2003 AS redis_builder
+# WORKDIR /workdir
+# RUN curl -L http://download.redis.io/redis-stable.tar.gz | tar -xz \
+#     && cd ./redis-stable \
+#     && yum install -y centos-release-scl \
+#     && yum install -y devtoolset-7 \
+#     && scl enable devtoolset-7 make
 
 FROM golang:1.15 AS ghost_builder
 # 2b5d5e0 - Fix ghost issue with binary primary key - https://github.com/github/gh-ost/pull/915
@@ -24,20 +25,28 @@ RUN pwd \
     && ./script/cibuild \
     && ls -l bin/
 
-FROM centos:8
+FROM quay.io/centos/centos:stream8
 
 LABEL maintainer="Vitaly Uvarov <v.uvarov@dodopizza.com>"
 
 COPY --from=jsonnet_builder /workdir/jsonnet /usr/local/bin/
 COPY --from=jsonnet_builder /workdir/jsonnetfmt /usr/local/bin/
-COPY --from=redis_builder /workdir/redis-stable/src/redis-cli /usr/local/bin/
+# COPY --from=redis_builder /workdir/redis-stable/src/redis-cli /usr/local/bin/
 COPY --from=ghost_builder /go/gh-ost/bin/gh-ost /usr/local/bin/
 
+## Update
+RUN dnf upgrade --setopt=install_weak_deps=False -y \
+    && dnf clean all \
+    && rm -rf /tmp/* \
+    && rm -rf /var/cache/yum \
+    && rm -rf /var/cache/dnf \
+    && find /var/log -type f -name '*.log' -delete
+
 RUN dnf install -y epel-release \
-    && dnf install -y python36 unzip git strace htop \
+    && dnf install -y python38 unzip git strace htop \
     && dnf install -y 'dnf-command(config-manager)' \
     && dnf clean all \
-    && alternatives --set python /usr/bin/python3 \
+    && alternatives --set python /usr/bin/python3.8 \
     && curl https://bootstrap.pypa.io/get-pip.py | python \
     && pip install --upgrade pip \
     && pip install yq
