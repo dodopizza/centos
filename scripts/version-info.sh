@@ -10,6 +10,7 @@ echo -n "kubectl: " && kubectl version --client=true --short=true
 ansible --version | head -n 1
 ansible-lint --version
 azcopy --version
+yc --version
 mysql --version
 mysqldump --version
 mysqlpump --version

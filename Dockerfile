@@ -80,6 +80,9 @@ RUN cd /tmp/ \
     && curl -L https://aka.ms/downloadazcopy-v10-linux | tar --strip-components 1 -xz \
     && mv -f /tmp/azcopy /usr/bin/
 
+## yandex cloud cli
+RUN curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+
 ## mysql client + percona tools
 RUN dnf install -y innotop \
     && dnf install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm \
