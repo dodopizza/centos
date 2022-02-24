@@ -109,19 +109,15 @@ RUN pip install docker-compose
 ## packer (hashicorp-packer)
 ## https://github.com/hashicorp/packer/releases
 ## issue: https://github.com/cracklib/cracklib/issues/7
-RUN packer_version=1.7.8 \
+RUN packer_version=1.7.10 \
     && curl -o /tmp/packer.zip https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_linux_amd64.zip \
     && unzip /tmp/packer.zip -d /tmp/ \
     && mv -f /tmp/packer /usr/bin/hashicorp-packer \
     && rm -f /tmp/packer.zip
 
-## helm
+## helm 3
 RUN cd /tmp/ \
-    && helm_version=2.11.0 \
-    && curl -L https://get.helm.sh/helm-v${helm_version}-linux-amd64.tar.gz | tar zx \
-    && mv -f linux-amd64/helm /usr/bin/helm${helm_version} \
-    && ln -f -s /usr/bin/helm${helm_version} /usr/bin/helm \
-    && rm -rf linux-amd64
+    && curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
 ## werf
 ## https://github.com/flant/werf/releases
@@ -141,7 +137,7 @@ RUN jq_version=1.6 \
 ## promtool from prometheus
 ## https://github.com/prometheus/prometheus/releases
 RUN cd /tmp/ \
-    && prometheus_version=2.30.3 \
+    && prometheus_version=2.33.4 \
     && curl -L https://github.com/prometheus/prometheus/releases/download/v${prometheus_version}/prometheus-${prometheus_version}.linux-amd64.tar.gz | tar zx \
     && cp -f prometheus-${prometheus_version}.linux-amd64/promtool /usr/bin/ \
     && rm -rf prometheus-${prometheus_version}.linux-amd64
@@ -149,14 +145,14 @@ RUN cd /tmp/ \
 ## amtool from alertmanager
 ## https://github.com/prometheus/alertmanager/releases
 RUN cd /tmp/ \
-    && alertmanager_version=0.21.0 \
+    && alertmanager_version=0.23.0 \
     && curl -L https://github.com/prometheus/alertmanager/releases/download/v${alertmanager_version}/alertmanager-${alertmanager_version}.linux-amd64.tar.gz | tar zx \
     && cp -f alertmanager-${alertmanager_version}.linux-amd64/amtool /usr/bin/ \
     && rm -rf alertmanager-${alertmanager_version}.linux-amd64
 
 ## terraform
 ## https://releases.hashicorp.com/terraform
-RUN terraform_version=1.1.2 \
+RUN terraform_version=1.1.6 \
     && curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip

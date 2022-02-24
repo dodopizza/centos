@@ -2,7 +2,7 @@
 jq --version
 git --version
 jsonnet --version
-redis-cli --version
+#redis-cli --version
 python --version
 pip3 --version
 (az --version 2>/dev/null) | head -n 1
@@ -10,7 +10,7 @@ echo -n "kubectl: " && kubectl version --client=true --short=true
 ansible --version | head -n 1
 ansible-lint --version
 azcopy --version
-yc --version
+bash -c 'yc --version'
 mysql --version
 mysqldump --version
 mysqlpump --version
