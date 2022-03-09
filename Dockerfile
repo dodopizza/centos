@@ -65,6 +65,9 @@ RUN dnf install -y gcc \
     && pip --no-cache-dir install 'azure-cli==2.12.1' \
     && dnf remove -y gcc
 
+## aws-shell
+RUN pip install aws-shell
+
 ## azure kubernetes client
 RUN az aks install-cli
 
