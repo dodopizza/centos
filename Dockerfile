@@ -70,7 +70,7 @@ RUN az aks install-cli
 
 ## ansible
 RUN pip --no-cache-dir install \
-    'ansible==2.9.11' \
+    'ansible==2.10.7' \
     'ansible-lint' \
     'pywinrm>=0.3.0' \
     'requests-ntlm'
