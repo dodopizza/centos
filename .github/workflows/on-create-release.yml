@@ -60,7 +60,7 @@ jobs:
           apps_version_info=$( docker run --rm ${centos_repo_dev}:${branch_short_sha} bash -c '/version-info.sh' )
           set-multiline-output apps_version_info \
           "Image Docker Hub: ${centos_repo_main}:${{ github.event.inputs.version_tag }}
-          "Image GitHub Container Registry: ${centos_repo_ghcr_main}:${{ github.event.inputs.version_tag }}
+          Image GitHub Container Registry: ${centos_repo_ghcr_main}:${{ github.event.inputs.version_tag }}
           **Utils preinstalled:**
           ${apps_version_info}"
 
