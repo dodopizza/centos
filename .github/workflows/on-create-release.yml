@@ -44,7 +44,7 @@ jobs:
             docker push ${image_tag}
           done
 
-      - name: Get apps version and draft release messsage
+      - name: Get apps version and draft release message
         id: image_app_versions
         run: |
           function set-multiline-output(){
