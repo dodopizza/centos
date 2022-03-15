@@ -13,11 +13,14 @@ jobs:
     env:
       centos_repo_main: dodopizza/centos
       centos_repo_dev:  dodopizza/centos-dev
+      centos_repo_ghcr_main: ghcr.io/dodopizza/centos
+      centos_repo_ghcr_dev:  ghcr.io/dodopizza/centos-dev
     steps:
 
       - name: Login to hub.docker
         run: |
-          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username=${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login --username=${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Retag dev image and push to prepare release draft
         run: |
@@ -31,8 +34,17 @@ jobs:
             docker tag ${centos_repo_dev}:${branch_short_sha} ${image_tag}
             docker push ${image_tag}
           done
+          docker pull ${centos_repo_ghcr_dev}:${branch_short_sha}
+          for image_tag in \
+            "${centos_repo_ghcr_main}:$( echo ${{ github.event.inputs.version_tag }} | cut -d . -f  1 )"  \
+            "${centos_repo_ghcr_main}:$( echo ${{ github.event.inputs.version_tag }} | cut -d . -f -2 )"  \
+            "${centos_repo_ghcr_main}:$( echo ${{ github.event.inputs.version_tag }} )"
+          do
+            docker tag ${centos_repo_ghcr_dev}:${branch_short_sha} ${image_tag}
+            docker push ${image_tag}
+          done
 
-      - name: Get apps version and draft release messsage
+      - name: Get apps version and draft release message
         id: image_app_versions
         run: |
           function set-multiline-output(){
@@ -47,7 +59,8 @@ jobs:
           branch_short_sha=$( echo ${{ github.ref }} | sha1sum | cut -c1-6 )
           apps_version_info=$( docker run --rm ${centos_repo_dev}:${branch_short_sha} bash -c '/version-info.sh' )
           set-multiline-output apps_version_info \
-          "Image: ${centos_repo_main}:${{ github.event.inputs.version_tag }}
+          "Image Docker Hub: ${centos_repo_main}:${{ github.event.inputs.version_tag }}
+          "Image GitHub Container Registry: ${centos_repo_ghcr_main}:${{ github.event.inputs.version_tag }}
           **Utils preinstalled:**
           ${apps_version_info}"
 
