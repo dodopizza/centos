@@ -3,7 +3,7 @@ name: Build
 on:
   pull_request:
   push:
-    branches:    
+    branches:
         - '*'
   workflow_dispatch:
 
@@ -14,6 +14,8 @@ jobs:
     env:
       centos_repo_main: dodopizza/centos
       centos_repo_dev:  dodopizza/centos-dev
+      centos_repo_ghcr_main: ghcr.io/dodopizza/centos
+      centos_repo_ghcr_dev:  ghcr.io/dodopizza/centos-dev
     steps:
 
       - name: Checkout code
@@ -21,7 +23,8 @@ jobs:
 
       - name: Login to hub.docker
         run: |
-          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username=${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login --username=${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build image and check preinstalled app versions
         run: |
@@ -32,10 +35,13 @@ jobs:
         run: |
           branch_short_sha=$( echo ${{ github.ref }} | sha1sum | cut -c1-6 )
           docker tag  centos_local ${centos_repo_dev}:${branch_short_sha}
+          docker tag  centos_local ${centos_repo_ghcr_dev}:${branch_short_sha}
           docker push ${centos_repo_dev}:${branch_short_sha}
+          docker push ${centos_repo_ghcr_dev}:${branch_short_sha}
 
           echo
           echo "Dev image tag: ${centos_repo_dev}:${branch_short_sha}"
+          echo "Dev image tag: ${centos_repo_ghcr_dev}:${branch_short_sha}"
           echo
 
       - name: Push to dodopizza/centos:latest and dodopizza/centos-dev:latest
@@ -43,5 +49,9 @@ jobs:
         run: |
           docker tag  centos_local ${centos_repo_main}:latest
           docker tag  centos_local ${centos_repo_dev}:latest
+          docker tag  centos_local ${centos_repo_ghcr_main}:latest
+          docker tag  centos_local ${centos_repo_ghcr_dev}:latest
           docker push ${centos_repo_main}:latest
           docker push ${centos_repo_dev}:latest
+          docker push ${centos_repo_ghcr_main}:latest
+          docker push ${centos_repo_ghcr_dev}:latest
