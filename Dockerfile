@@ -164,7 +164,8 @@ RUN curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/sc
     && dnf install -y openssh-clients sshpass \
     && dnf install -y sudo \
     && dnf clean all \
-    && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config
+    && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config \
+    && ln -s /usr/bin/sft /usr/local/bin/sft
 
 ## ghost-tool from dodopizza/sre-toolchain
 COPY bin/ghost-tool.sh  /usr/bin/ghost-tool
