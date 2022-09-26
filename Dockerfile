@@ -62,11 +62,14 @@ RUN    ( pip install 'ansible=='   || true ) \
 
 ## azure-cli
 RUN dnf install -y gcc \
-    && pip --no-cache-dir install 'azure-cli==2.12.1' \
+    && pip --no-cache-dir install 'azure-cli==2.40.0' \
     && dnf remove -y gcc
 
+## azure cli ssh extension
+RUN az extension add --name ssh
+
 ## azure kubernetes client
-RUN az aks install-cli
+RUN az aks install-cli --client-version 1.23.5
 
 ## ansible
 RUN pip --no-cache-dir install \
@@ -97,6 +100,9 @@ COPY bin/az-mysqlpump /usr/local/bin/
 RUN dnf install -y \
     https://github.com/maxbube/mydumper/releases/download/v0.10.7-2/mydumper-0.10.7-2.el8.x86_64.rpm
 
+## ps tool
+RUN dnf install procps -y
+
 ## docker-client for dind
 RUN dnf config-manager \
     --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
@@ -105,15 +111,6 @@ RUN dnf config-manager \
 
 ## docker-compose for dind
 RUN pip install docker-compose
-
-## packer (hashicorp-packer)
-## https://github.com/hashicorp/packer/releases
-## issue: https://github.com/cracklib/cracklib/issues/7
-RUN packer_version=1.7.10 \
-    && curl -o /tmp/packer.zip https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_linux_amd64.zip \
-    && unzip /tmp/packer.zip -d /tmp/ \
-    && mv -f /tmp/packer /usr/bin/hashicorp-packer \
-    && rm -f /tmp/packer.zip
 
 ## helm 3
 RUN cd /tmp/ \
@@ -152,26 +149,16 @@ RUN cd /tmp/ \
 
 ## terraform
 ## https://releases.hashicorp.com/terraform
-RUN terraform_version=1.1.6 \
+RUN terraform_version=1.1.8 \
     && curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip
-
-## scaleft client
-RUN curl -C - https://pkg.scaleft.com/scaleft_yum.repo | tee /etc/yum.repos.d/scaleft.repo \
-    && yes | rpm --import https://dist.scaleft.com/pki/scaleft_rpm_key.asc \
-    && dnf install -y scaleft-client-tools.x86_64 \
-    && dnf install -y openssh-clients sshpass \
-    && dnf install -y sudo \
-    && dnf clean all \
-    && mkdir /root/.ssh && sft ssh-config > /root/.ssh/config \
-    && ln -s /usr/bin/sft /usr/local/bin/sft
 
 ## ghost-tool from dodopizza/sre-toolchain
 COPY bin/ghost-tool.sh  /usr/bin/ghost-tool
 RUN  ln -s /usr/bin/ghost-tool /usr/bin/gh-ost-tool
 
-## scaleft user forwarding from host machine to container
+## entrypoint
 COPY  scripts/docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/bin/bash"]

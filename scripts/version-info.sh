@@ -19,9 +19,8 @@ mydumper --version
 ghost-tool --version
 innotop --version
 terraform --version
-echo -n "packer (hashicorp-packer): " && hashicorp-packer --version
-sft --version
 az-mysqlpump --version
+ps --version
 docker --version
 docker-compose --version
 echo -n "helm: " && helm version --client --short

@@ -26,16 +26,6 @@ To login to dodo infrastructure just type:
 dodo-login
 ```
 
-To forward current service user onto the container (sftd required):
-
-```bash
-...
--e "SFT_USER_ID=$(id -u)"
--e "SFT_USER_NAME=$(id -un)"
--v /var/run/sftd/management.sock:/var/run/sftd/management.sock
-...
-```
-
 ## Usage for Linux/OS X
 
 To use convenient command line function (dodo-centos), add following code to ~/.bashrc (bash) or ~/.zshrc (zsh)
@@ -135,7 +125,6 @@ tags:
   - innotop
   - Terraform
   - packer
-  - sft
   - az-mysqlpump
   - Docker
   - docker-compose

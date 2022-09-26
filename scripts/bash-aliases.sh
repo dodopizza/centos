@@ -1,6 +1,6 @@
 #!/bin/bash
 
-alias dodo-login="az login && sft enroll && sft login"
+alias dodo-login="az login"
 alias k="kubectl"
 
 function kubectx(){
