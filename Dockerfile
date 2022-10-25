@@ -95,7 +95,7 @@ RUN dnf install -y innotop \
 
 ## mysqlsh
 RUN dnf install -y https://dev.mysql.com/get/mysql80-community-release-el8-4.noarch.rpm \
-    && dnf install mysql-shell \
+    && dnf install -y mysql-shell \
     && dnf clean all
 
 ## azure mysqlpump binary (5.6 issue)
