@@ -93,6 +93,11 @@ RUN dnf install -y innotop \
     && dnf install -y percona-toolkit Percona-Server-client-57 percona-xtrabackup-24 \
     && dnf clean all
 
+## mysqlsh
+RUN dnf install -y https://dev.mysql.com/get/mysql80-community-release-el8-4.noarch.rpm \
+    && dnf install -y mysql-shell \
+    && dnf clean all
+
 ## azure mysqlpump binary (5.6 issue)
 COPY bin/az-mysqlpump /usr/local/bin/
 

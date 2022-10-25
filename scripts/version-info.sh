@@ -14,6 +14,7 @@ bash -c 'yc --version'
 mysql --version
 mysqldump --version
 mysqlpump --version
+mysqlsh --version
 mydumper --version
 (xtrabackup --version 2>&1 | grep version)
 ghost-tool --version
