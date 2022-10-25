@@ -1,7 +1,11 @@
 FROM alpine:3.10.3 AS jsonnet_builder
 WORKDIR /workdir
-RUN apk -U add build-base git \
-    && git clone https://github.com/google/jsonnet . \
+RUN jsonnet_repo_tag='v0.18.0' \
+    && apk -U add build-base git \
+    && git clone \
+        --depth 1 \
+        --branch "${jsonnet_repo_tag}" \
+        https://github.com/google/jsonnet . \
     && export LDFLAGS=-static \
     && make
 
