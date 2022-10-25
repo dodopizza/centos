@@ -32,7 +32,7 @@ To use convenient command line function (dodo-centos), add following code to ~/.
 
 ```bash
 function dodo-centos(){
-    local version=4
+    local version=4.2.0
     docker run -it --rm \
         -w /workdir -v "${PWD}:/workdir" \
         -v /var/run/docker.sock:/var/run/docker.sock \
@@ -45,7 +45,7 @@ To run dodo-centos as a pod in Kubernetes cluster add next code:
 
 ```bash
 function dodo-centos-k8s(){
-    local version=4
+    local version=4.2.0
     local username=$(id -u -n)
     local podname="dodo-centos-${username}"
     kubectl delete pod --ignore-not-found "${podname}"
@@ -66,7 +66,7 @@ and add following code
 
 ```powershell
 Function dodo-centos {
-  $version="4"
+  $version="4.2.0"
   docker run -it --rm `
     --privileged `
     -w /workdir -v "${PWD}:/workdir" `
@@ -115,6 +115,7 @@ tags:
   - ansible-lint
   - azcopy
   - mysql
+  - mysqlsh
   - mysqldump
   - mysqlpump
   - mydumper
