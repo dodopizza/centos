@@ -1,6 +1,6 @@
 FROM alpine:3.10.3 AS jsonnet_builder
 WORKDIR /workdir
-RUN jsonnet_repo_tag='v0.18.0' \
+RUN jsonnet_repo_tag='v0.19.1' \
     && apk -U add build-base git \
     && git clone \
         --depth 1 \
@@ -9,34 +9,12 @@ RUN jsonnet_repo_tag='v0.18.0' \
     && export LDFLAGS=-static \
     && make
 
-# Temporary disabled
-# FROM centos:7.8.2003 AS redis_builder
-# WORKDIR /workdir
-# RUN curl -L http://download.redis.io/redis-stable.tar.gz | tar -xz \
-#     && cd ./redis-stable \
-#     && yum install -y centos-release-scl \
-#     && yum install -y devtoolset-7 \
-#     && scl enable devtoolset-7 make
-
-FROM golang:1.15 AS ghost_builder
-# 2b5d5e0 - Fix ghost issue with binary primary key - https://github.com/github/gh-ost/pull/915
-RUN pwd \
-    && git config --global user.email "git@dodopizza.com" \
-    && git config --global user.name "DodoPizza" \
-    && git clone https://github.com/github/gh-ost.git \
-    && cd gh-ost/ \
-    && git pull origin pull/915/head && git checkout 2b5d5e0 \
-    && ./script/cibuild \
-    && ls -l bin/
-
 FROM quay.io/centos/centos:stream8
 
 LABEL maintainer="Vitaly Uvarov <v.uvarov@dodopizza.com>"
 
 COPY --from=jsonnet_builder /workdir/jsonnet /usr/local/bin/
 COPY --from=jsonnet_builder /workdir/jsonnetfmt /usr/local/bin/
-# COPY --from=redis_builder /workdir/redis-stable/src/redis-cli /usr/local/bin/
-COPY --from=ghost_builder /go/gh-ost/bin/gh-ost /usr/local/bin/
 
 ## Update
 RUN dnf upgrade --setopt=install_weak_deps=False -y \
@@ -47,10 +25,10 @@ RUN dnf upgrade --setopt=install_weak_deps=False -y \
     && find /var/log -type f -name '*.log' -delete
 
 RUN dnf install -y epel-release \
-    && dnf install -y python38 unzip git strace htop \
+    && dnf install -y python311 unzip git strace htop \
     && dnf install -y 'dnf-command(config-manager)' \
     && dnf clean all \
-    && alternatives --set python /usr/bin/python3.8 \
+    && alternatives --set python /usr/bin/python3.11 \
     && curl https://bootstrap.pypa.io/get-pip.py | python \
     && pip install --upgrade pip \
     && pip install yq
@@ -73,14 +51,12 @@ RUN dnf install -y gcc \
 RUN az extension add --name ssh
 
 ## azure kubernetes client
-RUN az aks install-cli --client-version 1.23.5
+RUN az aks install-cli --client-version 1.23.12
 
 ## ansible
 RUN pip --no-cache-dir install \
     'ansible==2.10.7' \
-    'ansible-lint' \
-    'pywinrm>=0.3.0' \
-    'requests-ntlm'
+    'ansible-lint' 
 
 ## azcopy10
 RUN cd /tmp/ \
@@ -102,15 +78,27 @@ RUN dnf install -y https://dev.mysql.com/get/mysql80-community-release-el8-4.noa
     && dnf install -y mysql-shell \
     && dnf clean all
 
-## azure mysqlpump binary (5.6 issue)
-COPY bin/az-mysqlpump /usr/local/bin/
+## gh-ost
+RUN dnf install https://github.com/github/gh-ost/releases/download/v1.1.5/gh-ost-1.1.5-1.x86_64.rpm \
+    && dnf clean all
 
 ## mydumper
 RUN dnf install -y \
-    https://github.com/maxbube/mydumper/releases/download/v0.10.7-2/mydumper-0.10.7-2.el8.x86_64.rpm
+    https://github.com/maxbube/mydumper/releases/download/v0.12.7-3/mydumper-0.12.7-3.stream8.x86_64.rpm \
+    && dnf clean all
+
+## kcat
+RUN dnf copr enable bvn13/kcat \
+    && dnf update -y && dnf install kafkacat -y \
+    && dnf clean all
+
+## redis
+RUN dnf module -y install redis:6 \
+    && dnf clean all
 
 ## ps tool
-RUN dnf install procps -y
+RUN dnf install procps -y \
+    && dnf clean all
 
 ## docker-client for dind
 RUN dnf config-manager \
