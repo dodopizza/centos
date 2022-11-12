@@ -79,7 +79,7 @@ RUN dnf install -y https://dev.mysql.com/get/mysql80-community-release-el8-4.noa
     && dnf clean all
 
 ## gh-ost
-RUN dnf install https://github.com/github/gh-ost/releases/download/v1.1.5/gh-ost-1.1.5-1.x86_64.rpm \
+RUN dnf install -y https://github.com/github/gh-ost/releases/download/v1.1.5/gh-ost-1.1.5-1.x86_64.rpm \
     && dnf clean all
 
 ## mydumper
