@@ -25,10 +25,10 @@ RUN dnf upgrade --setopt=install_weak_deps=False -y \
     && find /var/log -type f -name '*.log' -delete
 
 RUN dnf install -y epel-release \
-    && dnf install -y python311 unzip git strace htop \
+    && dnf install -y python39 unzip git strace htop \
     && dnf install -y 'dnf-command(config-manager)' \
     && dnf clean all \
-    && alternatives --set python /usr/bin/python3.11 \
+    && alternatives --set python /usr/bin/python3.9 \
     && curl https://bootstrap.pypa.io/get-pip.py | python \
     && pip install --upgrade pip \
     && pip install yq
