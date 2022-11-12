@@ -88,7 +88,7 @@ RUN dnf install -y \
     && dnf clean all
 
 ## kcat
-RUN dnf copr enable bvn13/kcat \
+RUN dnf copr enable -y bvn13/kcat \
     && dnf update -y && dnf install kafkacat -y \
     && dnf clean all
 
