@@ -88,8 +88,8 @@ RUN dnf install -y \
     && dnf clean all
 
 ## kcat
-RUN dnf copr enable -y bvn13/kcat \
-    && dnf update -y && dnf install kafkacat -y \
+RUN dnf copr enable -y bvn13/kcat mageia-8-x86_64 \
+    && dnf install kcat -y \
     && dnf clean all
 
 ## redis
