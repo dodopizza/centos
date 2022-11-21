@@ -2,7 +2,7 @@
 jq --version
 git --version
 jsonnet --version
-#redis-cli --version
+redis-cli --version
 python --version
 pip3 --version
 (az --version 2>/dev/null) | head -n 1
@@ -13,9 +13,9 @@ azcopy --version
 bash -c 'yc --version'
 mysql --version
 mysqldump --version
-mysqlpump --version
 mysqlsh --version
 mydumper --version
+kcat -V
 (xtrabackup --version 2>&1 | grep version)
 ghost-tool --version
 innotop --version
