@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Release
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     env:
       centos_repo_main: dodopizza/centos
       centos_repo_dev:  dodopizza/centos-dev
