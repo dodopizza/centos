@@ -74,7 +74,7 @@ RUN dnf install -y innotop \
     && dnf clean all
 
 ## mysqlsh
-RUN dnf install -y https://dev.mysql.com/get/mysql80-community-release-el8-4.noarch.rpm \
+RUN dnf install -y https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-community-8.0.32-1.el8.src.rpm \
     && dnf install -y mysql-shell \
     && dnf clean all
 
