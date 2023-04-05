@@ -54,7 +54,7 @@ jobs:
             output_val="${output_val//'%'/'%25'}"
             output_val="${output_val//$'\n'/'%0A'}"
             output_val="${output_val//$'\r'/'%0D'}"
-            echo "::set-output name=${output_key}::${output_val}"
+            echo "${output_key}=${output_val}"
           }
           branch_short_sha=$( echo ${{ github.ref }} | sha1sum | cut -c1-6 )
           apps_version_info=$( docker run --rm ${centos_repo_dev}:${branch_short_sha} bash -c '/version-info.sh' )
