@@ -1,6 +1,6 @@
 FROM alpine:3.10.3 AS jsonnet_builder
 WORKDIR /workdir
-RUN jsonnet_repo_tag='v0.19.1' \
+RUN jsonnet_repo_tag='v0.20.0' \
     && apk -U add build-base git \
     && git clone \
         --depth 1 \
@@ -44,7 +44,7 @@ RUN    ( pip install 'ansible=='   || true ) \
 
 ## azure-cli
 RUN dnf install -y gcc \
-    && pip --no-cache-dir install 'azure-cli==2.40.0' \
+    && pip --no-cache-dir install 'azure-cli==2.50.0' \
     && dnf remove -y gcc
 
 ## azure cli ssh extension
@@ -70,7 +70,7 @@ RUN curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
 RUN dnf install -y innotop \
     && dnf install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm \
     && dnf module disable -y mysql \
-    && dnf install -y percona-toolkit Percona-Server-client-57 percona-xtrabackup-24 \
+    && dnf install -y percona-toolkit Percona-Server-client-80 percona-xtrabackup-80 \
     && dnf clean all
 
 ## mysqlsh
@@ -80,11 +80,6 @@ RUN dnf install -y https://dev.mysql.com/get/mysql80-community-release-el8-4.noa
 
 ## gh-ost
 RUN dnf install -y https://github.com/github/gh-ost/releases/download/v1.1.5/gh-ost-1.1.5-1.x86_64.rpm \
-    && dnf clean all
-
-## mydumper
-RUN dnf install -y \
-    https://github.com/maxbube/mydumper/releases/download/v0.12.7-3/mydumper-0.12.7-3.stream8.x86_64.rpm \
     && dnf clean all
 
 ## kcat
@@ -131,7 +126,7 @@ RUN jq_version=1.6 \
 ## promtool from prometheus
 ## https://github.com/prometheus/prometheus/releases
 RUN cd /tmp/ \
-    && prometheus_version=2.33.4 \
+    && prometheus_version=2.45.0 \
     && curl -L https://github.com/prometheus/prometheus/releases/download/v${prometheus_version}/prometheus-${prometheus_version}.linux-amd64.tar.gz | tar zx \
     && cp -f prometheus-${prometheus_version}.linux-amd64/promtool /usr/bin/ \
     && rm -rf prometheus-${prometheus_version}.linux-amd64
@@ -139,14 +134,14 @@ RUN cd /tmp/ \
 ## amtool from alertmanager
 ## https://github.com/prometheus/alertmanager/releases
 RUN cd /tmp/ \
-    && alertmanager_version=0.23.0 \
+    && alertmanager_version=0.25.0 \
     && curl -L https://github.com/prometheus/alertmanager/releases/download/v${alertmanager_version}/alertmanager-${alertmanager_version}.linux-amd64.tar.gz | tar zx \
     && cp -f alertmanager-${alertmanager_version}.linux-amd64/amtool /usr/bin/ \
     && rm -rf alertmanager-${alertmanager_version}.linux-amd64
 
 ## terraform
 ## https://releases.hashicorp.com/terraform
-RUN terraform_version=1.1.8 \
+RUN terraform_version=1.5.2 \
     && curl -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip \
     && unzip /tmp/terraform.zip -d /usr/bin/ \
     && rm -f /tmp/terraform.zip

@@ -14,13 +14,11 @@ bash -c 'yc --version'
 mysql --version
 mysqldump --version
 mysqlsh --version
-mydumper --version
 kcat -V
 (xtrabackup --version 2>&1 | grep version)
 ghost-tool --version
 innotop --version
 terraform --version
-az-mysqlpump --version
 ps --version
 docker --version
 docker-compose --version

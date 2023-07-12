@@ -117,8 +117,6 @@ tags:
   - mysql
   - mysqlsh
   - mysqldump
-  - mysqlpump
-  - mydumper
   - xtrabackup
   - pt-online-schema-change
   - ghost
@@ -126,7 +124,6 @@ tags:
   - innotop
   - Terraform
   - packer
-  - az-mysqlpump
   - Docker
   - docker-compose
   - helm
