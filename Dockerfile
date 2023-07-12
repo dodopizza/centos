@@ -70,7 +70,8 @@ RUN curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
 RUN dnf install -y innotop \
     && dnf install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm \
     && dnf module disable -y mysql \
-    && dnf install -y percona-toolkit Percona-Server-client-80 percona-xtrabackup-80 \
+    && percona-release setup ps-80 -y \
+    && dnf install -y percona-toolkit percona-server-client percona-xtrabackup-80 \
     && dnf clean all
 
 ## mysqlsh
